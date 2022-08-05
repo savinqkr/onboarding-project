@@ -17,6 +17,9 @@
         "baseUrl": ".",
         "paths": {
             "@/*": ["src/*"],
+            "@common/*": ["src/common/*"],
+            "@domains/*": ["src/domains/*"],
+            "@recoil/*": ["src/recoil/*"],
             "@Login/*": ["src/domains/Login/*"],
             "@SignUp/*": ["src/domains/SignUp/*"]
         },

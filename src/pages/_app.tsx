@@ -13,4 +13,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
 }
 
+console.log();
+
 export default MyApp;

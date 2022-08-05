@@ -1,28 +1,35 @@
 import Link from "next/link";
 import { css } from "@emotion/react";
-import { HeaderBarVProps } from "./Header.inerface";
+import { Header } from "./Header.interface";
+import Button from "../Button";
 
-const VHeaderBar: React.FC<HeaderBarVProps> = () => {
+const VHeader: React.FC<Header.IVProps> = ({ goToLogin }) => {
     return (
-        <div css={headerBar}>
+        <div css={HeaderStyle}>
             {/* 로그인 토큰 없으면 */}
-            <Link href="/Login">
-                <div>로그인</div>
+            {/* <Button name="로그인" onClick={goToLogin} /> */}
+            <Link href="/login">
+                <Button name="로그인" onClick={goToLogin} />
             </Link>
+
             {/* 로그인 토큰 있으면 */}
             {/* <Link href="">
-                <div>게시글 추가</div>
-            </Link>
+                <Button name="게시글 추가" onClick={goToLogin} />
+            </Link>ㄴ
             <Link href="">
-                <div>로그아웃</div>
+                <Button name="로그아웃" onClick={goToLogin} />
             </Link> */}
         </div>
     );
 };
 
-const headerBar = css`
-    height: 50px;
-    background-color: gray;
+const HeaderStyle = css`
+    height: 100px;
+    padding: 0 36px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    background-color: #d9d9d9;
 `;
 
-export default VHeaderBar;
+export default VHeader;
