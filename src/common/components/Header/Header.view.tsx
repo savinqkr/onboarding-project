@@ -15,7 +15,7 @@ const VHeader: React.FC<Header.IVProps> = ({ goToLogin }) => {
             {/* 로그인 토큰 있으면 */}
             {/* <Link href="">
                 <Button name="게시글 추가" onClick={goToLogin} />
-            </Link>ㄴ
+            </Link>
             <Link href="">
                 <Button name="로그아웃" onClick={goToLogin} />
             </Link> */}

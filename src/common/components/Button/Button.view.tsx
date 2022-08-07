@@ -21,12 +21,11 @@ const ButtonStyle = (
     backgroundColor?: string
 ) => css`
     padding: 10px;
-    margin: 10px;
-    height: 40px;
+    height: 50px;
     min-width: 180px;
     border-radius: 5px;
     background-color: ${backgroundColor ? backgroundColor : "#4C87DF"};
-    font-size: ${fontSize ? fontSize : 16}px;
+    font-size: ${fontSize ? fontSize : 24}px;
     color: ${color ? color : "#fff"};
     text-align: center;
     border: none;

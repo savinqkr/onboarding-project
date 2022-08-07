@@ -1,18 +1,31 @@
-import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import Head from "next/head";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
-import Header from "@/common/components/Header";
+import { Layout } from "@common/components";
+
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
-    // return <Component {...pageProps} />
     return (
-        <RecoilRoot>
-            {/* <Header /> 질문!! */}
-            <Component {...pageProps} />
-        </RecoilRoot>
+        <>
+            <Head>
+                <title>IBCT | onBoarding</title>
+                <meta
+                    name="descripttion"
+                    content="This is onboarding project from IBCT"
+                ></meta>
+            </Head>
+            <QueryClientProvider client={queryClient}>
+                <RecoilRoot>
+                    {/* <Header /> 질문!! */}
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+                </RecoilRoot>
+            </QueryClientProvider>
+        </>
     );
 }
-
-console.log();
 
 export default MyApp;
