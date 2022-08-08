@@ -6,8 +6,6 @@ export namespace IInput {
         width: number;
         height: number;
         placeholder?: string;
-        // regiKey: string;
-        // register: UseFormRegister<IForm>;
     }
     export interface IVProps extends IProps {}
 }

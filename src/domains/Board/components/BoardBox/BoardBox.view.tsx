@@ -41,12 +41,17 @@ const VBoardBox: React.FC<IBoardBox.IVProps> = () => {
                 />
             ))}
 
-            <Button
-                name="더보기"
-                onClick={() => {
-                    console.log("Show More Posts!!!!!!!");
-                }}
-            />
+            <div css={ButtonBox}>
+                <Button
+                    name="더보기"
+                    width={180}
+                    height={50}
+                    fontSize={24}
+                    onClick={() => {
+                        console.log("Show More Posts!!!!!!!");
+                    }}
+                />
+            </div>
         </div>
     );
 };
@@ -64,6 +69,10 @@ const TableHeadStyle = css`
     align-items: center;
     font-size: 22px;
     background-color: #d9d9d9;
+`;
+const ButtonBox = css`
+    margin-top: 50px;
+    text-align: center;
 `;
 
 export default VBoardBox;

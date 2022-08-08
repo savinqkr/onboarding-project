@@ -9,17 +9,26 @@ const VLoginForm: React.FC<ILoginForm.IVProps> = props => {
         <div css={LoginFormStyle()}>
             <form onSubmit={onSubmit} css={FormStyle}>
                 <label>ID</label>
-                <input type="text" {...register("id")} />
+                <input type="text" placeholder="아이디" {...register("id")} />
 
-                <label>PK</label>
-                <input type="text" {...register("privateKey")} />
+                <label>Password</label>
+                <input
+                    type="text"
+                    placeholder="패스워드"
+                    {...register("privateKey")}
+                />
 
                 <div css={ButtonGroupStyle}>
                     <button type="submit" css={SubmitBtnStyle}>
                         로그인
                     </button>
                     <Link href="/signup">
-                        <Button name="회원가입" />
+                        <Button
+                            name="회원가입"
+                            width={180}
+                            height={50}
+                            fontSize={24}
+                        />
                     </Link>
                 </div>
             </form>
@@ -30,7 +39,7 @@ const VLoginForm: React.FC<ILoginForm.IVProps> = props => {
 const LoginFormStyle = (backgroundColor?: string) => css`
     width: 650px;
     min-height: 490px;
-    margin: 132px auto 0;
+    margin: 140px auto 0;
     display: flex;
     flex-direction: column;
     justify-content: center;

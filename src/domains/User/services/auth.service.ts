@@ -3,8 +3,13 @@ import {
     IAuthService,
     IGetSignature,
     ILoginUser,
+    IRegisterUser,
 } from "./auth.service.interface";
-import { GetSignatureQuery, LoginUserQuery } from "./graphql";
+import {
+    GetSignatureQuery,
+    LoginUserQuery,
+    RegisterUserQuery,
+} from "./graphql";
 
 class AuthService implements IAuthService {
     private static instance: AuthService;
@@ -33,6 +38,17 @@ class AuthService implements IAuthService {
             LoginUserQuery.IResponse,
             LoginUserQuery.IVariable
         >(LoginUserQuery.Document, args);
+
+        return { accessToken, refreshToken };
+    }
+    // Register
+    public async registerUser(args: IRegisterUser.IInput) {
+        const {
+            registerUser: { accessToken, refreshToken },
+        } = await this.client.request<
+            RegisterUserQuery.IResponse,
+            RegisterUserQuery.IVariable
+        >(RegisterUserQuery.Document, args);
 
         return { accessToken, refreshToken };
     }

@@ -18,7 +18,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             </Head>
             <QueryClientProvider client={queryClient}>
                 <RecoilRoot>
-                    {/* <Header /> 질문!! */}
                     <Layout>
                         <Component {...pageProps} />
                     </Layout>
