@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { css } from "@emotion/react";
-import { Button, Input } from "@common/components";
 import { ISignUpForm } from "./SignUpForm.interface";
 
 const VSignUpForm: React.FC<ISignUpForm.IVProps> = props => {
@@ -29,13 +28,6 @@ const VSignUpForm: React.FC<ISignUpForm.IVProps> = props => {
                 />
 
                 <div css={ButtonGroupStyle}>
-                    {/* <Button
-                        name="회원가입"
-                        type="submit"
-                        onClick={() => {
-                            console.log();
-                        }}
-                    /> */}
                     <button type="submit" css={SubmitBtnStyle}>
                         회원가입
                     </button>

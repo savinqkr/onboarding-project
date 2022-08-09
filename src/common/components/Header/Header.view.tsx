@@ -4,11 +4,14 @@ import { Header } from "./Header.interface";
 import Button from "../Button";
 import router from "next/router";
 
-const VHeader: React.FC<Header.IVProps> = ({ goToLogin, haveToken }) => {
+const VHeader: React.FC<Header.IVProps> = ({
+    goToLogin,
+    userLogout,
+    haveNoToken,
+}) => {
     return (
         <div css={HeaderStyle}>
-            {/* 토큰 없으면 */}
-            {haveToken && (
+            {haveNoToken && (
                 <div css={ButtonPositionStyle}>
                     <Link href="/login">
                         <Button name="로그인" onClick={goToLogin} />
@@ -16,22 +19,17 @@ const VHeader: React.FC<Header.IVProps> = ({ goToLogin, haveToken }) => {
                 </div>
             )}
 
-            {/* 토큰 있으면 */}
-            {!haveToken && (
+            {!haveNoToken && (
                 <>
-                    <p css={NickNameStyle}>NickName님 안녕하세요!</p>
+                    <p css={NickNameStyle}>Nickname 님 안녕하세요!</p>
                     <div css={ButtonGroupStyle}>
                         <Link href="">
-                            <Button name="게시글 추가" onClick={goToLogin} />
+                            <Button
+                                name="게시글 추가"
+                                onClick={() => alert("ADD NEW POST!")}
+                            />
                         </Link>
-                        <Button
-                            name="로그아웃"
-                            onClick={() => {
-                                alert("로그아웃 하시겠습니까?");
-                                window.localStorage.clear();
-                                router.push("/");
-                            }}
-                        />
+                        <Button name="로그아웃" onClick={userLogout} />
                     </div>
                 </>
             )}
