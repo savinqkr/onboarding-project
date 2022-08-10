@@ -8,38 +8,38 @@ import VSignUpForm from "./SignUpForm.view";
 const SignUpForm: React.FC<ISignUpForm.IProps> = () => {
     const { register, handleSubmit, getValues } = useForm<ISignUpForm.IForm>();
 
-    // get signature
-    const {
-        data: getRegisterSignatureData,
-        refetch: getRegisterSignatureRefetch,
-    } = useQuery(
-        ["get_register_signature"],
-        () =>
-            authService.getSignature({
-                accountName: getValues("register_id"),
-                privateKey:
-                    "5KkZqAYZWheCpSpLbFL5jukiRQ6cdB87oPXpo4BaMxx4k4vUCLR",
-                // privateKey: String(process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY),
-            }),
-        {
-            enabled: false,
-        }
-    );
+    // // get signature
+    // const {
+    //     data: getRegisterSignatureData,
+    //     refetch: getRegisterSignatureRefetch,
+    // } = useQuery(
+    //     ["get_register_signature"],
+    //     () =>
+    //         authService.getSignature({
+    //             accountName: getValues("register_id"),
+    //             privateKey:
+    //                 "5KkZqAYZWheCpSpLbFL5jukiRQ6cdB87oPXpo4BaMxx4k4vUCLR",
+    //             // privateKey: String(process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY),
+    //         }),
+    //     {
+    //         enabled: false,
+    //     }
+    // );
 
-    // register user
-    const { data: registerUserData, refetch: registerUserRefetch } = useQuery(
-        ["register_user"],
-        () => {
-            authService.registerUser({
-                accountName: getValues("register_id"),
-                nickname: getValues("register_nickname"),
-                signature: String(getRegisterSignatureData),
-            }),
-                {
-                    enabled: false,
-                };
-        }
-    );
+    // // register user
+    // const { data: registerUserData, refetch: registerUserRefetch } = useQuery(
+    //     ["register_user"],
+    //     () => {
+    //         authService.registerUser({
+    //             accountName: getValues("register_id"),
+    //             nickname: getValues("register_nickname"),
+    //             signature: String(getRegisterSignatureData),
+    //         }),
+    //             {
+    //                 enabled: false,
+    //             };
+    //     }
+    // );
 
     const onSubmit = () => {
         console.log("---- SIGNUP ----");
