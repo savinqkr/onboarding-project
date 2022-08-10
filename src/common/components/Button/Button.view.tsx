@@ -2,13 +2,21 @@ import { css } from "@emotion/react";
 import { IButton } from "./Button.interface";
 
 const VButton: React.FC<IButton.IVProps> = props => {
-    const { name, type, width, height, fontSize, backgroundColor, onClick } =
-        props;
+    const {
+        name,
+        type,
+        width,
+        height,
+        fontSize,
+        color,
+        backgroundColor,
+        onClick,
+    } = props;
 
     return (
         <button
             type={type ? type : "button"}
-            css={ButtonStyle(width, height, fontSize, backgroundColor)}
+            css={ButtonStyle(width, height, fontSize, color, backgroundColor)}
             onClick={onClick}
         >
             {name}
@@ -21,8 +29,7 @@ const ButtonStyle = (
     height?: number,
     fontSize?: number,
     color?: string,
-    backgroundColor?: string,
-    border?: boolean
+    backgroundColor?: string
 ) => css`
     padding: 10px;
     height: ${height ? height : 40}px;
@@ -32,7 +39,7 @@ const ButtonStyle = (
     font-size: ${fontSize ? fontSize : 22}px;
     color: ${color ? color : "#fff"};
     text-align: center;
-    border: ${border ? "1px solid red" : "none"};
+    border: none;
     cursor: pointer;
 `;
 

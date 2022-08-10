@@ -11,7 +11,7 @@ const VSignUpForm: React.FC<ISignUpForm.IVProps> = props => {
                 <input
                     type="text"
                     placeholder="아이디"
-                    {...register("register_id")}
+                    {...register("register_accountName")}
                 />
                 <label>Nickname</label>
                 <input

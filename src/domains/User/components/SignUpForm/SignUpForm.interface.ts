@@ -7,7 +7,7 @@ export namespace ISignUpForm {
         onSubmit: () => void;
     }
     export interface IForm {
-        register_id: string;
+        register_accountName: string;
         register_nickname: string;
         register_signature: string;
     }

@@ -9,23 +9,20 @@ const VLoginForm: React.FC<ILoginForm.IVProps> = props => {
         <div css={LoginFormStyle()}>
             <form onSubmit={onSubmit} css={FormStyle}>
                 <label>ID</label>
-                <input type="text" placeholder="아이디" {...register("id")} />
+                <input
+                    type="text"
+                    placeholder="아이디"
+                    {...register("login_accountName")}
+                />
 
                 <label>Password</label>
                 <input
                     // type="password"
                     type="text"
                     placeholder="패스워드"
-                    {...register("privateKey")}
+                    {...register("login_privateKey")}
                 />
 
-                {/* <Button
-                    name="시그니처"
-                    width={390}
-                    fontSize={24}
-                    color="red"
-                    backgroundColor="#fff"
-                /> */}
                 <div css={ButtonGroupStyle}>
                     <button type="submit" css={SubmitBtnStyle}>
                         로그인

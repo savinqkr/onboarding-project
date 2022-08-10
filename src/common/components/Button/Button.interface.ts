@@ -7,8 +7,6 @@ export namespace IButton {
         fontSize?: number;
         color?: string;
         backgroundColor?: string;
-        border?: boolean;
-        borderColor?: string;
         onClick?: () => void;
     }
     export interface IVProps extends IProps {}

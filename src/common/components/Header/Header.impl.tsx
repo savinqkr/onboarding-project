@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { Header } from "./Header.interface";
 import VHeader from "./Header.view";
+import authService from "@domains/User/services/auth.service";
 
 const Header: React.FC<Header.IProps> = () => {
     const router = useRouter();

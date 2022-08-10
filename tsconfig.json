@@ -20,8 +20,8 @@
             "@common/*": ["src/common/*"],
             "@domains/*": ["src/domains/*"],
             "@recoil/*": ["src/recoil/*"],
-            "@Login/*": ["src/domains/Login/*"],
-            "@SignUp/*": ["src/domains/SignUp/*"]
+            "@Board/*": ["src/domains/Board/*"],
+            "@User/*": ["src/domains/User/*"]
         },
         "incremental": true
     },

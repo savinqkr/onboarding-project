@@ -43,6 +43,13 @@ const SignUpForm: React.FC<ISignUpForm.IProps> = () => {
 
     const onSubmit = () => {
         console.log("---- SIGNUP ----");
+        console.log(
+            `AccountName : ${getValues(
+                "register_accountName"
+            )}  Nickname : ${getValues(
+                "register_nickname"
+            )} Signature : ${getValues("register_signature")}`
+        );
         // getRegisterSignatureRefetch();
     };
 

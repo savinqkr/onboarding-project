@@ -2,13 +2,18 @@ import Link from "next/link";
 import { css } from "@emotion/react";
 import { Header } from "./Header.interface";
 import Button from "../Button";
-import router from "next/router";
+import { parseJwt } from "@/domains/User/hooks";
 
 const VHeader: React.FC<Header.IVProps> = ({
     goToLogin,
     userLogout,
     haveNoToken,
 }) => {
+    const accessToken = window.localStorage.getItem("userTokens");
+    console.log("--- AccessToken ---");
+    console.log(accessToken);
+    console.log(parseJwt(accessToken));
+
     return (
         <div css={HeaderStyle}>
             {haveNoToken && (
@@ -21,7 +26,7 @@ const VHeader: React.FC<Header.IVProps> = ({
 
             {!haveNoToken && (
                 <>
-                    <p css={NickNameStyle}>Nickname 님 안녕하세요!</p>
+                    <p css={NickNameStyle}>{"Nickname"} 님 안녕하세요!</p>
                     <div css={ButtonGroupStyle}>
                         <Link href="">
                             <Button

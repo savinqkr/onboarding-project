@@ -9,7 +9,7 @@ export namespace ILoginForm {
         onSubmit: () => void;
     }
     export interface IForm {
-        id: string;
-        privateKey: string;
+        login_accountName: string;
+        login_privateKey: string;
     }
 }
