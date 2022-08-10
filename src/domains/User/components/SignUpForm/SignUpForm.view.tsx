@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { css } from "@emotion/react";
 import { ISignUpForm } from "./SignUpForm.interface";
+import { Button } from "@/common/components";
 
 const VSignUpForm: React.FC<ISignUpForm.IVProps> = props => {
-    const { register, onSubmit } = props;
+    const { register, onSubmit, getSignature } = props;
     return (
         <div css={SignUpFormStyle()}>
             <form onSubmit={onSubmit} css={FormStyle}>
-                <label>ID</label>
+                <label>AccountName</label>
                 <input
                     type="text"
                     placeholder="아이디"
@@ -16,17 +17,16 @@ const VSignUpForm: React.FC<ISignUpForm.IVProps> = props => {
                 <label>Nickname</label>
                 <input
                     type="text"
-                    placeholder="닉네임"
+                    placeholder="아이디"
                     {...register("register_nickname")}
                 />
-
                 <label>Signature</label>
+                <div onClick={getSignature}>getSignature</div>
                 <input
                     type="text"
-                    placeholder="비밀번호"
+                    placeholder="아이디"
                     {...register("register_signature")}
                 />
-
                 <div css={ButtonGroupStyle}>
                     <button type="submit" css={SubmitBtnStyle}>
                         회원가입
@@ -70,6 +70,8 @@ const ButtonGroupStyle = css`
     width: 400px;
     margin-top: 37px;
     text-align: center;
+    /* display: flex;
+    justify-content: space-between; */
 `;
 const SubmitBtnStyle = css`
     padding: 10px;

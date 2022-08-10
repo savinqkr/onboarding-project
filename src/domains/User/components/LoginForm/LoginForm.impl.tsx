@@ -18,14 +18,14 @@ const LoginForm: React.FC<ILoginForm.IProps> = () => {
             () =>
                 authService.getSignature({
                     accountName: getValues("login_accountName"),
-                    privateKey: getValues("login_privateKey"),
-                    // privateKey: String(
-                    //     process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY
-                    // ),
+                    privateKey: String(
+                        process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY
+                    ),
+                    // privateKey: getValues("login_privateKey"),
                 }),
             {
                 enabled: false,
-                // enabled: true,
+                cacheTime: 0,
             }
         );
 
@@ -36,23 +36,22 @@ const LoginForm: React.FC<ILoginForm.IProps> = () => {
             authService.loginUser({
                 accountName: getValues("login_accountName"),
                 signature: String(loginSignatureData),
-                // signature:
-                //     "SIG_K1_KcTVtmxJK7TnG1AfXx9TpZyhHqW3FFRdHjzQWyPN6NrrLtZLo83zKaQ5Kv4ZXDV4TMaE3jvFiig1Rqup8r3evK3TfqqeoE",
             }),
         {
             enabled: false,
-            // enabled: loginSignatureData !== undefined,
+            cacheTime: 0,
         }
     );
 
     const onSubmit = () => {
-        // console.log("---- LOGIN ----");
-        // console.log(`ID : ${getValues("login_accountName")}  PK : ${getValues("login_privateKey")}`);
-
+        if (
+            getValues("login_accountName") === "" ||
+            getValues("login_privateKey") === ""
+        ) {
+            alert("AccountName과 PrivateKey를 입력해주세요.");
+            return;
+        }
         loginSignatureRefetch();
-        // console.log("---- LOGIN : Signature ----");
-        // console.log(loginSignatureData);
-
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         // console.log("---- LOGIN ----");
         // console.log(`ID : ${getValues("login_accountName")}  PK : ${getValues("login_privateKey")}`);
@@ -75,29 +74,19 @@ const LoginForm: React.FC<ILoginForm.IProps> = () => {
     };
 
     useEffect(() => {
-        // console.log("loginSignatureData >>> ");
-        // console.log(loginSignatureData);
         if (loginSignatureData !== undefined) {
             loginUserRefetch();
         }
-        // console.log("---- LOGIN : Tokens ----");
-        // console.log(loginUserData);
     }, [loginSignatureData]);
 
     useEffect(() => {
-        // console.log("loginUserData >>> ");
-        // console.log(loginUserData);
         if (loginUserData !== undefined) {
             window.localStorage.setItem(
                 "userTokens",
                 JSON.stringify(loginUserData)
             );
-            // console.log("---- tokens saved in localStorage ----");
-            // console.log(
-            //     `ID : ${getValues("id")} PK : ${getValues("privateKey")}`
-            // );
-            setValue("login_accountName", "");
-            setValue("login_privateKey", "");
+            // setValue("login_accountName", "");
+            // setValue("login_privateKey", "");
             router.push("/");
         }
     }, [loginUserData]);

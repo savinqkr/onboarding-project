@@ -2,20 +2,22 @@ import Link from "next/link";
 import { css } from "@emotion/react";
 import { Button } from "@common/components";
 import { ILoginForm } from "./LoginForm.interface";
+import { useRouter } from "next/router";
 
 const VLoginForm: React.FC<ILoginForm.IVProps> = props => {
     const { register, onSubmit } = props;
+    const router = useRouter();
     return (
         <div css={LoginFormStyle()}>
             <form onSubmit={onSubmit} css={FormStyle}>
-                <label>ID</label>
+                <label>AccountName</label>
                 <input
                     type="text"
                     placeholder="아이디"
                     {...register("login_accountName")}
                 />
 
-                <label>Password</label>
+                <label>PrivateKey</label>
                 <input
                     // type="password"
                     type="text"
@@ -27,14 +29,12 @@ const VLoginForm: React.FC<ILoginForm.IVProps> = props => {
                     <button type="submit" css={SubmitBtnStyle}>
                         로그인
                     </button>
-                    <Link href="/signup">
-                        <Button
-                            name="회원가입"
-                            width={180}
-                            height={50}
-                            fontSize={24}
-                        />
-                    </Link>
+                    <div
+                        css={signUpBtnStyle}
+                        onClick={() => router.push("/signup")}
+                    >
+                        회원가입
+                    </div>
                 </div>
             </form>
         </div>
@@ -55,7 +55,7 @@ const FormStyle = css`
     display: flex;
     flex-direction: column;
     & > label {
-        margin-bottom: 4px;
+        margin: 10px 0 4px;
         font-size: 22px;
         font-weight: 700;
     }
@@ -72,6 +72,7 @@ const FormStyle = css`
 `;
 const ButtonGroupStyle = css`
     width: 400px;
+    height: 50px;
     margin-top: 50px;
     display: flex;
     justify-content: space-between;
@@ -85,6 +86,19 @@ const SubmitBtnStyle = css`
     text-align: center;
     color: #fff;
     background-color: #4c87df;
+    border: none;
+    cursor: pointer;
+`;
+const signUpBtnStyle = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 50px;
+    font-size: 24px;
+    color: #fff;
+    background-color: #4c87df;
+    border-radius: 5px;
     border: none;
     cursor: pointer;
 `;

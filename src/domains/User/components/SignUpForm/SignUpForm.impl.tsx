@@ -8,72 +8,69 @@ import VSignUpForm from "./SignUpForm.view";
 const SignUpForm: React.FC<ISignUpForm.IProps> = () => {
     const { register, handleSubmit, getValues } = useForm<ISignUpForm.IForm>();
 
-    // // get signature
-    // const {
-    //     data: getRegisterSignatureData,
-    //     refetch: getRegisterSignatureRefetch,
-    // } = useQuery(
-    //     ["get_register_signature"],
-    //     () =>
-    //         authService.getSignature({
-    //             accountName: getValues("register_id"),
-    //             privateKey:
-    //                 "5KkZqAYZWheCpSpLbFL5jukiRQ6cdB87oPXpo4BaMxx4k4vUCLR",
-    //             // privateKey: String(process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY),
-    //         }),
-    //     {
-    //         enabled: false,
-    //     }
-    // );
-
-    // // register user
-    // const { data: registerUserData, refetch: registerUserRefetch } = useQuery(
-    //     ["register_user"],
-    //     () => {
-    //         authService.registerUser({
-    //             accountName: getValues("register_id"),
-    //             nickname: getValues("register_nickname"),
-    //             signature: String(getRegisterSignatureData),
-    //         }),
-    //             {
-    //                 enabled: false,
-    //             };
-    //     }
-    // );
-
-    const onSubmit = () => {
-        console.log("---- SIGNUP ----");
-        console.log(
-            `AccountName : ${getValues(
-                "register_accountName"
-            )}  Nickname : ${getValues(
-                "register_nickname"
-            )} Signature : ${getValues("register_signature")}`
+    // get signature
+    const { data: registerSignatureData, refetch: registerSignatureRefetch } =
+        useQuery(
+            ["get_register_signature"],
+            () =>
+                authService.getSignature({
+                    accountName: getValues("register_accountName"),
+                    privateKey: String(
+                        process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY
+                    ),
+                }),
+            {
+                enabled: false,
+                // cacheTime: 0,
+            }
         );
-        // getRegisterSignatureRefetch();
+
+    // register user
+    const { data: registerUserData, refetch: registerUserRefetch } = useQuery(
+        ["register_user"],
+        () =>
+            authService.registerUser({
+                accountName: getValues("register_accountName"),
+                nickname: getValues("register_nickname"),
+                signature: String(registerSignatureData),
+                // signature:
+                //     "SIG_K1_K1A3DGJ8odwhtRs3QHuJJBeidWTojMugJEmZHUaswiLRvewT51Js22R5PD4rLgZJixTAqRFJw4x52EGeeDriXWEEVor7P8",
+            }),
+        {
+            enabled: false,
+        }
+    );
+
+    const getSignature = () => {
+        if (
+            getValues("register_accountName") === "" ||
+            getValues("register_nickname") === ""
+        ) {
+            alert("AccountName, Nickname");
+        }
+        registerSignatureRefetch();
     };
 
-    // useEffect(() => {
-    //     console.log("Register Signature >>> ");
-    //     console.log(getRegisterSignatureData);
-    //     if (getRegisterSignatureData !== undefined) {
-    //         // registerUserRefetch();
-    //         console.log(
-    //             `ID : ${getValues("register_id")}, Nickname : ${getValues(
-    //                 "register_nickname"
-    //             )}, Signature : ${getRegisterSignatureData}`
-    //         );
-    //     }
-    //     console.log("---------------");
-    // }, [getRegisterSignatureData]);
+    const onSubmit = () => {
+        console.log(getValues("register_accountName"));
+        console.log(getValues("register_nickname"));
+        console.log(getValues("register_signature"));
+        if (registerSignatureData !== undefined) {
+            registerUserRefetch();
+        }
+    };
 
-    // useEffect(() => {
-    //     console.log("Register User >>> ");
-    //     console.log(registerUserData);
-    // }, [registerUserData]);
+    useEffect(() => {
+        console.log("--- Register : signature ---");
+        console.log(registerSignatureData);
+    }, [registerSignatureData]);
 
     return (
-        <VSignUpForm register={register} onSubmit={handleSubmit(onSubmit)} />
+        <VSignUpForm
+            register={register}
+            onSubmit={handleSubmit(onSubmit)}
+            getSignature={getSignature}
+        />
     );
 };
 

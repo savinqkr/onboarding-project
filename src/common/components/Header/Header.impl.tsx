@@ -21,8 +21,9 @@ const Header: React.FC<Header.IProps> = () => {
     const userLogout = () => {
         alert("로그아웃 하시겠습니까?");
         window.localStorage.clear();
-        router.push("/");
-        location.reload();
+        // router.push("/");
+        // location.reload();
+        router.reload();
     };
 
     return (

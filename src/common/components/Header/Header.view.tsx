@@ -9,24 +9,33 @@ const VHeader: React.FC<Header.IVProps> = ({
     userLogout,
     haveNoToken,
 }) => {
-    const accessToken = window.localStorage.getItem("userTokens");
-    console.log("--- AccessToken ---");
-    console.log(accessToken);
-    console.log(parseJwt(accessToken));
+    // console.log("--- AccessToken ---");
+    // const accessToken = window.localStorage.getItem("userTokens");
+    // console.log(accessToken);
+    // console.log(parseJwt(accessToken));
+    // // if (!haveNoToken) {
+    // //     const tokens = window.localStorage.getItem("userTokens");
+    // const user = parseJwt(accessToken);
+    // // }
 
     return (
         <div css={HeaderStyle}>
-            {haveNoToken && (
+            {haveNoToken ? (
                 <div css={ButtonPositionStyle}>
                     <Link href="/login">
                         <Button name="로그인" onClick={goToLogin} />
                     </Link>
                 </div>
-            )}
-
-            {!haveNoToken && (
+            ) : (
                 <>
-                    <p css={NickNameStyle}>{"Nickname"} 님 안녕하세요!</p>
+                    <p css={NickNameStyle}>
+                        {
+                            // parseJwt(window.localStorage.getItem("userTokens"))
+                            //     .nickname
+                            "Nickname"
+                        }
+                        님 안녕하세요!
+                    </p>
                     <div css={ButtonGroupStyle}>
                         <Link href="">
                             <Button

@@ -31,6 +31,7 @@ class AuthService implements IAuthService {
 
         return signature;
     }
+
     // Login (AccessToken & RefreshToken)
     public async loginUser(args: ILoginUser.IInput) {
         const {
@@ -42,7 +43,8 @@ class AuthService implements IAuthService {
 
         return { accessToken, refreshToken };
     }
-    // Register
+
+    // Register (AccessToken & RefreshToken)
     public async registerUser(args: IRegisterUser.IInput) {
         const {
             registerUser: { accessToken, refreshToken },

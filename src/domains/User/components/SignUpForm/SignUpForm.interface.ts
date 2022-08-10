@@ -5,6 +5,7 @@ export namespace ISignUpForm {
     export interface IVProps {
         register: UseFormRegister<IForm>;
         onSubmit: () => void;
+        getSignature: () => void;
     }
     export interface IForm {
         register_accountName: string;
