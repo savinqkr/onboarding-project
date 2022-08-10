@@ -13,18 +13,19 @@ const VLoginForm: React.FC<ILoginForm.IVProps> = props => {
 
                 <label>Password</label>
                 <input
-                    type="password"
+                    // type="password"
+                    type="text"
                     placeholder="패스워드"
                     {...register("privateKey")}
                 />
 
-                <Button
+                {/* <Button
                     name="시그니처"
                     width={390}
                     fontSize={24}
                     color="red"
                     backgroundColor="#fff"
-                />
+                /> */}
                 <div css={ButtonGroupStyle}>
                     <button type="submit" css={SubmitBtnStyle}>
                         로그인
