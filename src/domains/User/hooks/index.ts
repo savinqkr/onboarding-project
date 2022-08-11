@@ -1,1 +1,1 @@
-export { default as parseJwt } from "./parseJwt";
+export { default as useParse } from "./useParse";

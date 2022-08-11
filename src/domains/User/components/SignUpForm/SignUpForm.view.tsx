@@ -4,7 +4,7 @@ import { ISignUpForm } from "./SignUpForm.interface";
 const VSignUpForm: React.FC<ISignUpForm.IVProps> = props => {
     const { register, onSubmit, getSignature } = props;
     return (
-        <div css={signUpFormStyle()}>
+        <div css={signUpFormStyle}>
             <form onSubmit={onSubmit} css={formStyle}>
                 <label>AccountName</label>
                 <input
@@ -42,7 +42,7 @@ const VSignUpForm: React.FC<ISignUpForm.IVProps> = props => {
     );
 };
 
-const signUpFormStyle = (backgroundColor?: string) => css`
+const signUpFormStyle = css`
     width: 650px;
     min-height: 490px;
     margin: 140px auto 0;
@@ -50,7 +50,7 @@ const signUpFormStyle = (backgroundColor?: string) => css`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ${backgroundColor ? backgroundColor : "#D9D9D9"};
+    background-color: "#D9D9D9";
 `;
 const formStyle = css`
     display: flex;

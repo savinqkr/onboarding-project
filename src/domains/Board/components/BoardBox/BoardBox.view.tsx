@@ -2,27 +2,13 @@ import { css } from "@emotion/react";
 import { IBoardBox } from "./BoardBox.interface";
 import BoardItem from "../BoardItem";
 import Button from "@/common/components/Button";
-import { useQueries, useQuery } from "@tanstack/react-query";
-import boardService from "../../services/board.service";
-import { useEffect } from "react";
 
-const VBoardBox: React.FC<IBoardBox.IVProps> = () => {
-    const posts = [1, 2, 3, 4, 5];
-
-    const { data, refetch } = useQuery(
-        ["get_board"],
-        () => boardService.getBoard({ limit: 5 }),
-        {
-            enabled: false,
-        }
-    );
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
+const VBoardBox: React.FC<IBoardBox.IVProps> = props => {
+    const { boardData } = props;
 
     return (
-        <div css={BoardBoxStyle}>
-            <div css={TableHeadStyle}>
+        <div css={boardBoxStyle}>
+            <div css={tableHeadStyle}>
                 <div>No.</div>
                 <div>Title</div>
                 <div>Author</div>
@@ -30,7 +16,7 @@ const VBoardBox: React.FC<IBoardBox.IVProps> = () => {
                 <div>UpdatedAt</div>
             </div>
 
-            {posts.map((v, key) => (
+            {/* {boardData.map((v, key) => (
                 <BoardItem
                     key={key}
                     no={v}
@@ -39,9 +25,9 @@ const VBoardBox: React.FC<IBoardBox.IVProps> = () => {
                     createdAt={v}
                     updatedAt={v}
                 />
-            ))}
+            ))} */}
 
-            <div css={ButtonBox}>
+            <div css={buttonBox}>
                 <Button
                     name="더보기"
                     width={180}
@@ -56,12 +42,12 @@ const VBoardBox: React.FC<IBoardBox.IVProps> = () => {
     );
 };
 
-const BoardBoxStyle = css`
+const boardBoxStyle = css`
     width: 1200px;
     margin: 100px auto 0;
 `;
 
-const TableHeadStyle = css`
+const tableHeadStyle = css`
     width: 1200px;
     height: 90px;
     display: flex;
@@ -70,7 +56,7 @@ const TableHeadStyle = css`
     font-size: 22px;
     background-color: #d9d9d9;
 `;
-const ButtonBox = css`
+const buttonBox = css`
     margin-top: 50px;
     text-align: center;
 `;

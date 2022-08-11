@@ -55,9 +55,9 @@ const headerStyle = css`
     background-color: #d9d9d9;
 `;
 const sessionGroupStyle = css`
-position: absolute;
+    position: absolute;
     left: 36px;
-consr`;
+`;
 const nickNameStyle = css`
     font-size: 24px;
 `;

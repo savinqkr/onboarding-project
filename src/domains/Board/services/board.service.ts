@@ -10,6 +10,7 @@ class BoardService implements IBoardService {
     public static get Instance(): BoardService {
         return this.instance || (this.instance = new this());
     }
+
     // Board
     public async getBoard(limit: IGetBoard.IInput) {
         const {

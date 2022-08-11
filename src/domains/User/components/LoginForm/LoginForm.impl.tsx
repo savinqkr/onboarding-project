@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { ILoginForm } from "./LoginForm.interface";
 import VLoginForm from "./LoginForm.view";
-import authService from "@domains/User/services/auth.service";
+import authService from "@User/services/auth.service";
 
 const LoginForm: React.FC<ILoginForm.IProps> = () => {
     const { register, handleSubmit, getValues, setValue } = useForm<
@@ -82,6 +82,7 @@ const LoginForm: React.FC<ILoginForm.IProps> = () => {
 
     useEffect(() => {
         if (loginUserData !== undefined) {
+            console.log(loginUserData);
             window.localStorage.setItem(
                 "userTokens",
                 JSON.stringify(loginUserData)

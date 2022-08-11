@@ -1,4 +1,7 @@
 export namespace IBoardBox {
-    export interface IProps {}
+    export interface IProps {
+        // boardData: string[];
+        boardData: any;
+    }
     export interface IVProps extends IProps {}
 }
