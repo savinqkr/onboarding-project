@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { ILoginForm } from "./LoginForm.interface";
@@ -7,27 +7,28 @@ import VLoginForm from "./LoginForm.view";
 import authService from "@domains/User/services/auth.service";
 
 const LoginForm: React.FC<ILoginForm.IProps> = () => {
-    const { register, handleSubmit, getValues, setValue } =
-        useForm<ILoginForm.IForm>();
+    const { register, handleSubmit, getValues, setValue } = useForm<
+        ILoginForm.IForm
+    >();
     const router = useRouter();
 
     // get signature
-    const { data: loginSignatureData, refetch: loginSignatureRefetch } =
-        useQuery(
-            ["get_login_signature"],
-            () =>
-                authService.getSignature({
-                    accountName: getValues("login_accountName"),
-                    privateKey: String(
-                        process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY
-                    ),
-                    // privateKey: getValues("login_privateKey"),
-                }),
-            {
-                enabled: false,
-                cacheTime: 0,
-            }
-        );
+    const {
+        data: loginSignatureData,
+        refetch: loginSignatureRefetch,
+    } = useQuery(
+        ["get_login_signature"],
+        () =>
+            authService.getSignature({
+                accountName: getValues("login_accountName"),
+                privateKey: String(process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY),
+                // privateKey: getValues("login_privateKey"),
+            }),
+        {
+            enabled: false,
+            cacheTime: 0,
+        }
+    );
 
     // login user
     const { data: loginUserData, refetch: loginUserRefetch } = useQuery(

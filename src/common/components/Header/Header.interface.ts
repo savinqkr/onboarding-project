@@ -4,5 +4,6 @@ export namespace Header {
         goToLogin: () => void;
         userLogout: () => void;
         haveNoToken: boolean;
+        userNickname?: Object;
     }
 }

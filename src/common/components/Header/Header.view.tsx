@@ -2,12 +2,13 @@ import Link from "next/link";
 import { css } from "@emotion/react";
 import { Header } from "./Header.interface";
 import Button from "../Button";
-import { parseJwt } from "@/domains/User/hooks";
+// import { parseJwt } from "@/domains/User/hooks";
 
 const VHeader: React.FC<Header.IVProps> = ({
     goToLogin,
     userLogout,
     haveNoToken,
+    userNickname,
 }) => {
     // console.log("--- AccessToken ---");
     // const accessToken = window.localStorage.getItem("userTokens");
@@ -19,24 +20,18 @@ const VHeader: React.FC<Header.IVProps> = ({
     // // }
 
     return (
-        <div css={HeaderStyle}>
+        <div css={headerStyle}>
             {haveNoToken ? (
-                <div css={ButtonPositionStyle}>
+                <div css={buttonPositionStyle}>
                     <Link href="/login">
                         <Button name="로그인" onClick={goToLogin} />
                     </Link>
                 </div>
             ) : (
                 <>
-                    <p css={NickNameStyle}>
-                        {
-                            // parseJwt(window.localStorage.getItem("userTokens"))
-                            //     .nickname
-                            "Nickname"
-                        }
-                        님 안녕하세요!
-                    </p>
-                    <div css={ButtonGroupStyle}>
+                    <div css={sessionGroupStyle}>세션 :</div>
+                    <p css={nickNameStyle}>{userNickname}님 안녕하세요!</p>
+                    <div css={buttonGroupStyle}>
                         <Link href="">
                             <Button
                                 name="게시글 추가"
@@ -51,7 +46,7 @@ const VHeader: React.FC<Header.IVProps> = ({
     );
 };
 
-const HeaderStyle = css`
+const headerStyle = css`
     height: 100px;
     padding: 0 36px;
     display: flex;
@@ -59,17 +54,21 @@ const HeaderStyle = css`
     align-items: center;
     background-color: #d9d9d9;
 `;
-const NickNameStyle = css`
+const sessionGroupStyle = css`
+position: absolute;
+    left: 36px;
+consr`;
+const nickNameStyle = css`
     font-size: 24px;
 `;
-const ButtonGroupStyle = css`
+const buttonGroupStyle = css`
     width: 310px;
     position: absolute;
     right: 36px;
     display: flex;
     justify-content: space-between;
 `;
-const ButtonPositionStyle = css`
+const buttonPositionStyle = css`
     width: 140px;
     position: absolute;
     right: 36px;

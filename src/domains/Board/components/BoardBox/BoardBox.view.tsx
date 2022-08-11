@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import { IBoardBox } from "./BoardBox.interface";
 import BoardItem from "../BoardItem";
 import Button from "@/common/components/Button";
-import { useQueries, useQuery } from "react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import boardService from "../../services/board.service";
 import { useEffect } from "react";
 
