@@ -11,11 +11,9 @@ const BoardBox: React.FC<IBoardBox.IProps> = () => {
         isLoading,
     } = useQuery(["getBoard"], () => boardService.getBoard({ limit: 5 }));
 
-    if (isLoading) {
-        return <p>Loading . . .</p>;
-    } else {
-        return <VBoardBox boardData={boardData} />;
-    }
+    if (isLoading) return <p>Loading . . .</p>;
+
+    return <VBoardBox boardData={boardData} />;
 };
 
 export default BoardBox;

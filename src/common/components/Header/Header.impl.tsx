@@ -7,9 +7,7 @@ const Header: React.FC<Header.IProps> = () => {
     const router = useRouter();
 
     const haveNoToken =
-        typeof window !== "undefined" &&
-        !localStorage.getItem("userTokens") &&
-        typeof localStorage.getItem("userTokens") !== undefined;
+        typeof window !== "undefined" && !localStorage.getItem("userTokens");
 
     let userInfo;
     if (typeof window !== "undefined") {
