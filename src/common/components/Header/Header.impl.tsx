@@ -9,7 +9,7 @@ const Header: React.FC<Header.IProps> = () => {
     const haveNoToken =
         typeof window !== "undefined" &&
         !localStorage.getItem("userTokens") &&
-        typeof localStorage.getItem("userToken") !== undefined;
+        typeof localStorage.getItem("userTokens") !== undefined;
 
     let userInfo;
     if (typeof window !== "undefined") {
