@@ -20,7 +20,11 @@ class AuthService implements IAuthService {
         return this.instance || (this.instance = new this());
     }
 
-    // Signature
+    /**
+     * Get Signature
+     * @param args -- accountName, privateKey
+     * @returns -- { accessToken, refreshToken }
+     */
     public async getSignature(args: IGetSignature.IInput) {
         const {
             getSignature: { signature },
@@ -32,7 +36,11 @@ class AuthService implements IAuthService {
         return signature;
     }
 
-    // Login (AccessToken & RefreshToken)
+    /**
+     * Login User
+     * @param args -- accountName, signature
+     * @returns -- { accessToken, refreshToken }
+     */
     public async loginUser(args: ILoginUser.IInput) {
         const {
             loginUser: { accessToken, refreshToken },
@@ -44,7 +52,11 @@ class AuthService implements IAuthService {
         return { accessToken, refreshToken };
     }
 
-    // Register (AccessToken & RefreshToken)
+    /**
+     * Register User
+     * @param args -- accountName, nickname, signature
+     * @returns -- { accessToken, refreshToken }
+     */
     public async registerUser(args: IRegisterUser.IInput) {
         const {
             registerUser: { accessToken, refreshToken },

@@ -3,10 +3,16 @@ import { gql } from "graphql-request";
 export namespace GetBoardQuery {
     export interface IVariable {}
     export interface IResponse {
-        getBoard: {
-            // board: Promise<string[]>;
-            board: any;
-        };
+        board: Array<{
+            id: string;
+            title: string;
+            content: string;
+            author: {
+                nickname: string;
+            };
+            createdAt: string;
+            updatedAt: string;
+        }>;
     }
     export const Document = gql`
         query GetBoardQuery($limit: Int!) {
@@ -17,6 +23,8 @@ export namespace GetBoardQuery {
                 author {
                     nickname
                 }
+                createdAt
+                updatedAt
             }
         }
     `;

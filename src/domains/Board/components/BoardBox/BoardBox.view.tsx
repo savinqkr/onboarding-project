@@ -16,16 +16,16 @@ const VBoardBox: React.FC<IBoardBox.IVProps> = props => {
                 <div>UpdatedAt</div>
             </div>
 
-            {/* {boardData.map((v, key) => (
+            {boardData.map((post, index) => (
                 <BoardItem
-                    key={key}
-                    no={v}
-                    title={v}
-                    author={v}
-                    createdAt={v}
-                    updatedAt={v}
+                    key={post.id}
+                    no={index + 1}
+                    title={post.title}
+                    author={post.author.nickname}
+                    createdAt={post.createdAt}
+                    updatedAt={post.updatedAt}
                 />
-            ))} */}
+            ))}
 
             <div css={buttonBox}>
                 <Button

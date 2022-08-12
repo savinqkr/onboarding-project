@@ -1,7 +1,15 @@
 export namespace IBoardBox {
     export interface IProps {
-        // boardData: string[];
-        boardData: any;
+        boardData:
+            | {
+                  id: string;
+                  title: string;
+                  content: string;
+                  author: { nickname: string };
+                  createdAt: string;
+                  updatedAt: string;
+              }[]
+            | undefined;
     }
     export interface IVProps extends IProps {}
 }

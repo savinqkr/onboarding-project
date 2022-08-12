@@ -11,11 +11,21 @@ class BoardService implements IBoardService {
         return this.instance || (this.instance = new this());
     }
 
-    // Board
+    /**
+     * Get Board
+     * @param limit 
+     * @returns -- board : Array<{
+        id: string;
+        title: string;
+        content: string;
+        author: {
+            nickname: string;
+        };
+        createdAt: string;
+        updatedAt: string;
+     */
     public async getBoard(limit: IGetBoard.IInput) {
-        const {
-            getBoard: { board },
-        } = await this.client.request<
+        const { board } = await this.client.request<
             GetBoardQuery.IResponse,
             GetBoardQuery.IVariable
         >(GetBoardQuery.Document, limit);

@@ -6,18 +6,18 @@ import { useParse } from "@/domains/User/hooks";
 const Header: React.FC<Header.IProps> = () => {
     const router = useRouter();
 
-    // const haveNoToken =
-    //     typeof localStorage.getItem("userToken") !== "undefined";
     const haveNoToken =
         typeof window !== "undefined" &&
         !localStorage.getItem("userTokens") &&
-        localStorage.getItem("userToken") !== undefined;
+        typeof localStorage.getItem("userToken") !== undefined;
 
     let userInfo;
     if (typeof window !== "undefined") {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        userInfo = useParse(String(window.localStorage.getItem("userTokens")));
-        console.log(userInfo);
+        userInfo = useParse(
+            String(window.localStorage.getItem("userTokens")),
+            haveNoToken
+        );
+        userInfo && window.localStorage.setItem("loginExpire", userInfo.exp);
     }
 
     const goToLogin = () => {

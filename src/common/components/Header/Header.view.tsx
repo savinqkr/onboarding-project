@@ -1,8 +1,7 @@
 import Link from "next/link";
+import Button from "../Button";
 import { css } from "@emotion/react";
 import { Header } from "./Header.interface";
-import Button from "../Button";
-// import { parseJwt } from "@/domains/User/hooks";
 
 const VHeader: React.FC<Header.IVProps> = ({
     goToLogin,
@@ -10,15 +9,6 @@ const VHeader: React.FC<Header.IVProps> = ({
     haveNoToken,
     userNickname,
 }) => {
-    // console.log("--- AccessToken ---");
-    // const accessToken = window.localStorage.getItem("userTokens");
-    // console.log(accessToken);
-    // console.log(parseJwt(accessToken));
-    // // if (!haveNoToken) {
-    // //     const tokens = window.localStorage.getItem("userTokens");
-    // const user = parseJwt(accessToken);
-    // // }
-
     return (
         <div css={headerStyle}>
             {haveNoToken ? (

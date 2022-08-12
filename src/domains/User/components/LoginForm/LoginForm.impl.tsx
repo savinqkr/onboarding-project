@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "react-query";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { ILoginForm } from "./LoginForm.interface";
@@ -7,35 +7,37 @@ import VLoginForm from "./LoginForm.view";
 import authService from "@User/services/auth.service";
 
 const LoginForm: React.FC<ILoginForm.IProps> = () => {
-    const { register, handleSubmit, getValues, setValue } = useForm<
-        ILoginForm.IForm
-    >();
+    const { register, handleSubmit, getValues } = useForm<ILoginForm.IForm>();
     const router = useRouter();
 
-    // get signature
-    const {
-        data: loginSignatureData,
-        refetch: loginSignatureRefetch,
-    } = useQuery(
-        ["get_login_signature"],
-        () =>
-            authService.getSignature({
-                accountName: getValues("login_accountName"),
-                privateKey: String(process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY),
-                // privateKey: getValues("login_privateKey"),
-            }),
-        {
-            enabled: false,
-            cacheTime: 0,
-        }
-    );
+    // Get Signature
+    const { data: loginSignatureData, refetch: loginSignatureRefetch } =
+        useQuery(
+            ["getLoginSignature"],
+            () =>
+                authService.getSignature({
+                    accountName: getValues("loginAccountName"),
+                    privateKey: String(
+                        process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY
+                    ),
+                }),
+            {
+                enabled: false,
+                cacheTime: 0,
+            }
+        );
 
-    // login user
+    /**
+     * Login User
+     * @param accountName
+     * @param signature
+     * @returns -- accessToken, refreshToken
+     */
     const { data: loginUserData, refetch: loginUserRefetch } = useQuery(
-        ["login_user"],
+        ["loginUser"],
         () =>
             authService.loginUser({
-                accountName: getValues("login_accountName"),
+                accountName: getValues("loginAccountName"),
                 signature: String(loginSignatureData),
             }),
         {
@@ -46,32 +48,13 @@ const LoginForm: React.FC<ILoginForm.IProps> = () => {
 
     const onSubmit = () => {
         if (
-            getValues("login_accountName") === "" ||
-            getValues("login_privateKey") === ""
+            getValues("loginAccountName") === "" ||
+            getValues("loginPrivateKey") === ""
         ) {
             alert("AccountName과 PrivateKey를 입력해주세요.");
             return;
         }
         loginSignatureRefetch();
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        // console.log("---- LOGIN ----");
-        // console.log(`ID : ${getValues("login_accountName")}  PK : ${getValues("login_privateKey")}`);
-
-        // loginSignatureRefetch();
-        // console.log("---- LOGIN : Signature ----");
-        // console.log(loginSignatureData);
-        // loginUserRefetch();
-        // console.log("---- LOGIN : Tokens ----");
-        // console.log(loginUserData);
-
-        // if (loginUserData !== undefined) {
-        //     window.localStorage.setItem(
-        //         "userTokens",
-        //         JSON.stringify(loginUserData)
-        //     );
-        //     console.log("---- tokens saved in localStorage ----");
-        // }
-        // router.push("/");
     };
 
     useEffect(() => {
@@ -87,8 +70,6 @@ const LoginForm: React.FC<ILoginForm.IProps> = () => {
                 "userTokens",
                 JSON.stringify(loginUserData)
             );
-            // setValue("login_accountName", "");
-            // setValue("login_privateKey", "");
             router.push("/");
         }
     }, [loginUserData]);

@@ -8,8 +8,8 @@ export namespace ISignUpForm {
         getSignature: () => void;
     }
     export interface IForm {
-        register_accountName: string;
-        register_nickname: string;
-        register_signature: string;
+        registerAccountName: string;
+        registerNickname: string;
+        registerSignature: string;
     }
 }

@@ -10,13 +10,13 @@ const VSignUpForm: React.FC<ISignUpForm.IVProps> = props => {
                 <input
                     type="text"
                     placeholder="ID"
-                    {...register("register_accountName")}
+                    {...register("registerAccountName")}
                 />
                 <label>Nickname</label>
                 <input
                     type="text"
                     placeholder="Password"
-                    {...register("register_nickname")}
+                    {...register("registerNickname")}
                 />
                 <label>Signature</label>
                 <div css={signatureGroupStyle}>
@@ -25,7 +25,7 @@ const VSignUpForm: React.FC<ISignUpForm.IVProps> = props => {
                         type="password"
                         readOnly
                         placeholder="Signature"
-                        {...register("register_signature")}
+                        {...register("registerSignature")}
                         css={signatureInputStyle}
                     />
                     <div onClick={getSignature} css={getSignatureBtnStyle}>
@@ -50,7 +50,7 @@ const signUpFormStyle = css`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: "#D9D9D9";
+    background-color: #d9d9d9;
 `;
 const formStyle = css`
     display: flex;
@@ -75,8 +75,6 @@ const buttonGroupStyle = css`
     width: 400px;
     margin-top: 37px;
     text-align: center;
-    /* display: flex;
-    justify-content: space-between; */
 `;
 const submitBtnStyle = css`
     padding: 10px;

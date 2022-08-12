@@ -14,7 +14,7 @@ const VLoginForm: React.FC<ILoginForm.IVProps> = props => {
                 <input
                     type="text"
                     placeholder="아이디"
-                    {...register("login_accountName")}
+                    {...register("loginAccountName")}
                 />
 
                 <label>PrivateKey</label>
@@ -22,7 +22,7 @@ const VLoginForm: React.FC<ILoginForm.IVProps> = props => {
                     // type="password"
                     type="text"
                     placeholder="패스워드"
-                    {...register("login_privateKey")}
+                    {...register("loginPrivateKey")}
                 />
 
                 <div css={ButtonGroupStyle}>
