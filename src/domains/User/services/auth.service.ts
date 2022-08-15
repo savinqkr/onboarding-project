@@ -4,11 +4,13 @@ import {
     IGetSignature,
     ILoginUser,
     IRegisterUser,
+    IRefreshJwt,
 } from "./auth.service.interface";
 import {
     GetSignatureQuery,
     LoginUserQuery,
     RegisterUserQuery,
+    RefreshJwtQuery,
 } from "./graphql";
 
 class AuthService implements IAuthService {
@@ -22,7 +24,7 @@ class AuthService implements IAuthService {
 
     /**
      * Get Signature
-     * @param args -- accountName, privateKey
+     * @param args -- { accountName, privateKey }
      * @returns -- { accessToken, refreshToken }
      */
     public async getSignature(args: IGetSignature.IInput) {
@@ -38,23 +40,25 @@ class AuthService implements IAuthService {
 
     /**
      * Login User
-     * @param args -- accountName, signature
+     * @param args -- { accountName, signature }
      * @returns -- { accessToken, refreshToken }
      */
     public async loginUser(args: ILoginUser.IInput) {
         const {
-            loginUser: { accessToken, refreshToken },
+            loginUser,
+            // : { accessToken, refreshToken },
         } = await this.client.request<
             LoginUserQuery.IResponse,
             LoginUserQuery.IVariable
         >(LoginUserQuery.Document, args);
 
-        return { accessToken, refreshToken };
+        // return { accessToken, refreshToken };
+        return loginUser;
     }
 
     /**
      * Register User
-     * @param args -- accountName, nickname, signature
+     * @param args -- { accountName, nickname, signature }
      * @returns -- { accessToken, refreshToken }
      */
     public async registerUser(args: IRegisterUser.IInput) {
@@ -66,6 +70,20 @@ class AuthService implements IAuthService {
         >(RegisterUserQuery.Document, args);
 
         return { accessToken, refreshToken };
+    }
+
+    /**
+     * Refresh JWT
+     * @param args -- { accountName, refreshToken }
+     * @returns -- { accessToken, refreshToken }
+     */
+    public async refreshJwt(args: IRefreshJwt.IInput) {
+        const { refreshJwt } = await this.client.request<
+            RefreshJwtQuery.IResponse,
+            RefreshJwtQuery.IVariable
+        >(RefreshJwtQuery.Document, args);
+
+        return refreshJwt;
     }
 }
 

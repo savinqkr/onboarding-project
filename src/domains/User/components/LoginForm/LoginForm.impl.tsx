@@ -7,25 +7,25 @@ import VLoginForm from "./LoginForm.view";
 import authService from "@User/services/auth.service";
 
 const LoginForm: React.FC<ILoginForm.IProps> = () => {
-    const { register, handleSubmit, getValues } = useForm<ILoginForm.IForm>();
     const router = useRouter();
+    const { register, handleSubmit, getValues } = useForm<ILoginForm.IForm>();
 
     // Get Signature
-    const { data: loginSignatureData, refetch: loginSignatureRefetch } =
-        useQuery(
-            ["getLoginSignature"],
-            () =>
-                authService.getSignature({
-                    accountName: getValues("loginAccountName"),
-                    privateKey: String(
-                        process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY
-                    ),
-                }),
-            {
-                enabled: false,
-                cacheTime: 0,
-            }
-        );
+    const {
+        data: loginSignatureData,
+        refetch: loginSignatureRefetch,
+    } = useQuery(
+        ["getLoginSignature"],
+        () =>
+            authService.getSignature({
+                accountName: getValues("loginAccountName"),
+                privateKey: String(process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY),
+            }),
+        {
+            enabled: false,
+            cacheTime: 0,
+        }
+    );
 
     /**
      * Login User
@@ -65,10 +65,13 @@ const LoginForm: React.FC<ILoginForm.IProps> = () => {
 
     useEffect(() => {
         if (loginUserData !== undefined) {
-            console.log(loginUserData);
             window.localStorage.setItem(
-                "userTokens",
-                JSON.stringify(loginUserData)
+                "accessToken",
+                String(loginUserData.accessToken)
+            );
+            window.localStorage.setItem(
+                "refreshToken",
+                String(loginUserData.refreshToken)
             );
             router.push("/");
         }
