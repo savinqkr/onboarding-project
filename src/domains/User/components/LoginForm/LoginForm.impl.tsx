@@ -1,77 +1,82 @@
 import { useForm } from "react-hook-form";
-import { ILoginForm } from "./LoginForm.interface";
-import VLoginForm from "./LoginForm.view";
-
-import { useQueries, useQuery } from "react-query";
-import authService from "@domains/User/services/auth.service";
+import { useQuery } from "react-query";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { access } from "fs";
+import { ILoginForm } from "./LoginForm.interface";
+import VLoginForm from "./LoginForm.view";
+import authService from "@User/services/auth.service";
 
 const LoginForm: React.FC<ILoginForm.IProps> = () => {
-    const { register, handleSubmit, getValues } = useForm<ILoginForm.IForm>();
     const router = useRouter();
-    /*
-    const { data, refetch } = useQuery(
-        ["get_signature"],
+    const { register, handleSubmit, getValues } = useForm<ILoginForm.IForm>();
+
+    // getSignature (login) -- useQuery
+    const { data: loginSignatureData, refetch: loginSignatureRefetch } =
+        useQuery(
+            ["getLoginSignature"],
+            () =>
+                authService.getSignature({
+                    accountName: getValues("loginAccountName"),
+                    privateKey: String(
+                        process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY
+                    ),
+                }),
+            {
+                enabled: false,
+                cacheTime: 0,
+            }
+        );
+
+    // loginUser -- useQuery
+    const { data: loginUserData, refetch: loginUserRefetch } = useQuery(
+        ["loginUser"],
         () =>
-            // authService.getSignature({
-            //     accountName: getValues("id"),
-            //     privateKey: getValues("privateKey"),
-            // }),
             authService.loginUser({
-                accountName: "day1coll2.p",
-                signature:
-                    "SIG_K1_KcTVtmxJK7TnG1AfXx9TpZyhHqW3FFRdHjzQWyPN6NrrLtZLo83zKaQ5Kv4ZXDV4TMaE3jvFiig1Rqup8r3evK3TfqqeoE",
+                accountName: getValues("loginAccountName"),
+                signature: String(loginSignatureData),
             }),
         {
             enabled: false,
+            cacheTime: 0,
         }
     );
+
+    // onClickLoginUser
+    const onClickLoginUser = () => {
+        if (
+            getValues("loginAccountName") === "" ||
+            getValues("loginPrivateKey") === ""
+        ) {
+            alert("AccountName과 PrivateKey를 입력해주세요.");
+            return;
+        }
+        loginSignatureRefetch();
+    };
+
     useEffect(() => {
-        console.log(data);
-    }, [data]);
-    const onSubmit = () => {
-        console.log(`${getValues("id")}, ${getValues("privateKey")}`);
-        refetch();
-    };
-    */
+        if (!loginSignatureData) return;
+        loginUserRefetch();
+    }, [loginSignatureData]);
 
-    const result = useQueries([
-        {
-            queryKey: ["get_signature"],
-            queryFn: () =>
-                authService.getSignature({
-                    accountName: getValues("id"),
-                    privateKey: getValues("privateKey"),
-                }),
-        },
-        {
-            queryKey: ["login_user"],
-            queryFn: () =>
-                authService.loginUser({
-                    accountName: getValues("id"),
-                    signature:
-                        "SIG_K1_KcTVtmxJK7TnG1AfXx9TpZyhHqW3FFRdHjzQWyPN6NrrLtZLo83zKaQ5Kv4ZXDV4TMaE3jvFiig1Rqup8r3evK3TfqqeoE",
-                }),
-        },
-    ]);
-
-    const onSubmit = () => {
-        console.log(`ID : ${getValues("id")}, PW : ${getValues("privateKey")}`);
-        // console.log(result);
-        const now = new Date();
-        const tokenInfo = {
-            "access-token": result[1].data?.accessToken,
-            "refresh-token": result[1].data?.refreshToken,
-            expire: now.getTime() + 1 * 60 * 60 * 1000,
-        };
-        // console.log(tokenInfo);
-        window.localStorage.setItem("tokens", String(tokenInfo));
+    useEffect(() => {
+        if (!loginUserData) return;
+        window.localStorage.setItem(
+            "accessToken",
+            String(loginUserData.accessToken)
+        );
+        window.localStorage.setItem(
+            "refreshToken",
+            String(loginUserData.refreshToken)
+        );
         router.push("/");
-    };
+    }, [loginUserData]);
 
-    return <VLoginForm register={register} onSubmit={handleSubmit(onSubmit)} />;
+    return (
+        <VLoginForm
+            register={register}
+            onClickLoginUser={handleSubmit(onClickLoginUser)}
+        />
+    );
 };
 
 export default LoginForm;

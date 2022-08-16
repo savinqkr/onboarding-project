@@ -2,6 +2,7 @@ import {
     GetSignatureQuery,
     LoginUserQuery,
     RegisterUserQuery,
+    RefreshJwtQuery,
 } from "./graphql";
 
 export namespace IGetSignature {
@@ -13,6 +14,9 @@ export namespace ILoginUser {
 export namespace IRegisterUser {
     export interface IInput extends RegisterUserQuery.IVariable {}
 }
+export namespace IRefreshJwt {
+    export interface IInput extends RefreshJwtQuery.IVariable {}
+}
 export interface IAuthService {
     getSignature(args: IGetSignature.IInput): Promise<string>;
     loginUser(
@@ -20,5 +24,8 @@ export interface IAuthService {
     ): Promise<{ accessToken: string; refreshToken: string }>;
     registerUser(
         args: IRegisterUser.IInput
+    ): Promise<{ accessToken: string; refreshToken: string }>;
+    refreshJwt(
+        args: IRefreshJwt.IInput
     ): Promise<{ accessToken: string; refreshToken: string }>;
 }

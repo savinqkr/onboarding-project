@@ -1,6 +1,10 @@
 import { GraphQLClient } from "graphql-request";
-import { IGetBoard, IBoardService } from "./board.service.interface";
-import { GetBoardQuery } from "./graphql";
+import {
+    IGetBoard,
+    IBoardService,
+    ICreateBoard,
+} from "./board.service.interface";
+import { GetBoardQuery, CreateBoardQuery } from "./graphql";
 
 class BoardService implements IBoardService {
     private static instance: BoardService;
@@ -10,16 +14,55 @@ class BoardService implements IBoardService {
     public static get Instance(): BoardService {
         return this.instance || (this.instance = new this());
     }
-    // Board
+
+    /**
+     * getBoard
+     * @param limit 
+     * @returns -- board : Array<{
+        id: string;
+        title: string;
+        content: string;
+        author: {
+            nickname: string;
+        };
+        createdAt: string;
+        updatedAt: string;
+    }>
+     */
     public async getBoard(limit: IGetBoard.IInput) {
-        const {
-            getBoard: { board },
-        } = await this.client.request<
+        const { board } = await this.client.request<
             GetBoardQuery.IResponse,
             GetBoardQuery.IVariable
         >(GetBoardQuery.Document, limit);
 
         return board;
+    }
+
+    /**
+     * createBoard
+     * @param object -- { title, content, author_id }
+     * @returns -- insert_board_one : Promise<{
+        id: string;
+        title: string;
+        content: string;
+        createdAt: string;
+        author: {
+            nickname: string;
+        };
+        updatedAt: string;
+    }>
+     */
+    public async createBoard(object: ICreateBoard.IInput) {
+        const { insert_board_one } = await this.client.request<
+            CreateBoardQuery.IResponse,
+            CreateBoardQuery.IVariable
+        >(CreateBoardQuery.Document, object, {
+            Authorization: `Bearer ${window.localStorage.getItem(
+                "accessToken"
+            )}`,
+        });
+
+        return insert_board_one;
     }
 }
 

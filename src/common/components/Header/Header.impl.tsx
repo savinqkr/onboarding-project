@@ -1,45 +1,89 @@
-// import { Header } from "next/dist/lib/load-custom-routes";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { useQuery } from "react-query";
+import { useParseJwt, useCounter } from "@/domains/User/hooks";
 import { Header } from "./Header.interface";
 import VHeader from "./Header.view";
+import authService from "@User/services/auth.service";
 
 const Header: React.FC<Header.IProps> = () => {
     const router = useRouter();
 
-    const haveToken =
-        typeof window !== "undefined" && !localStorage.getItem("tokens");
-    // console.log(haveToken);
+    const haveNoToken: boolean =
+        typeof window !== "undefined" && !localStorage.getItem("accessToken");
 
-    const goToLogin = () => {
-        router.push("/login");
+    let userInfo:
+        | {
+              accountName: string;
+              exp: number;
+              iat: number;
+              nickname: string;
+              sub: string;
+          }
+        | undefined;
+    let sessionTime: string | void;
+    if (typeof window !== "undefined") {
+        userInfo = useParseJwt(
+            String(window.localStorage.getItem("accessToken")),
+            haveNoToken
+        );
+        if (userInfo) {
+            window.localStorage.setItem("accountName", userInfo.accountName);
+            sessionTime = useCounter(userInfo.exp);
+        }
+    }
+
+    // refreshJwt -- useQuery
+    const { data: refreshJwtData, refetch: refreshJwtRefetch } = useQuery(
+        ["refreshJwt"],
+        () =>
+            authService.refreshJwt({
+                accountName: String(window.localStorage.getItem("accountName")),
+                refreshToken: String(
+                    window.localStorage.getItem("refreshToken")
+                ),
+            }),
+        {
+            enabled: false,
+        }
+    );
+
+    // onClickUserLogout
+    const onClickUserLogout = () => {
+        const answer = confirm("로그아웃 하시겠습니까?");
+        if (answer) {
+            window.localStorage.clear();
+            router.reload();
+        }
     };
 
-    // ----------------
-    function parseJwt(token: string) {
-        var base64Url = token.split(".")[1];
-        var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        var jsonPayload = decodeURIComponent(
-            window
-                .atob(base64)
-                .split("")
-                .map(function (c) {
-                    return (
-                        "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
-                    );
-                })
-                .join("")
+    // onClickRefreshToken
+    const onClickRefreshToken = () => refreshJwtRefetch();
+
+    useEffect(() => {
+        if (!refreshJwtData) return;
+        window.localStorage.setItem(
+            "accessToken",
+            String(refreshJwtData.accessToken)
         );
+        window.localStorage.setItem(
+            "refreshToken",
+            String(refreshJwtData.refreshToken)
+        );
+        setTimeout(() => {
+            router.push("/");
+        }, 2000);
+    }, [refreshJwtData]);
 
-        return JSON.parse(jsonPayload);
-    }
-    console.log(
-        parseJwt(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwOGVlMDljNS00YTY5LTRlNjEtOWQyNS1mYzgwYTI1NGNmM2IiLCJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsiYW5vbnltb3VzIiwidXNlciJdLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtdXNlci1pZCI6IjA4ZWUwOWM1LTRhNjktNGU2MS05ZDI1LWZjODBhMjU0Y2YzYiJ9LCJuaWNrbmFtZSI6ImRheTEiLCJhY2NvdW50TmFtZSI6ImRheTFjb2xsMi5wIiwiaWF0IjoxNjU5OTQ0NzQ1LCJleHAiOjE2NTk5NDgzNDV9.P6HpMWK7JXDBQkYcc59o5wvhycPDSn9clEFGsgMAyAA"
-        )
+    return (
+        <VHeader
+            onClickUserLogout={onClickUserLogout}
+            onClickRefreshToken={onClickRefreshToken}
+            haveNoToken={haveNoToken}
+            userNickname={userInfo ? userInfo.nickname : ""}
+            sessionTime={sessionTime ? sessionTime : ""}
+        />
     );
-    // ----------------
-
-    return <VHeader goToLogin={goToLogin} haveToken={haveToken} />;
 };
 
 export default Header;

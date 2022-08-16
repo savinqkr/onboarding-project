@@ -1,7 +1,10 @@
 export namespace Header {
     export interface IProps {}
     export interface IVProps {
-        goToLogin: () => void;
-        haveToken: boolean;
+        haveNoToken: boolean;
+        userNickname?: string;
+        sessionTime?: string;
+        onClickUserLogout: () => void;
+        onClickRefreshToken: () => void;
     }
 }

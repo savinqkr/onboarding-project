@@ -1,67 +1,55 @@
 import { css } from "@emotion/react";
 import { IBoardBox } from "./BoardBox.interface";
 import BoardItem from "../BoardItem";
-import Button from "@/common/components/Button";
-import { useQueries, useQuery } from "react-query";
-import boardService from "../../services/board.service";
-import { useEffect } from "react";
 
-const VBoardBox: React.FC<IBoardBox.IVProps> = () => {
-    const posts = [1, 2, 3, 4, 5];
-
-    const { data, refetch } = useQuery(
-        ["get_board"],
-        () => boardService.getBoard({ limit: 5 }),
-        {
-            enabled: false,
-        }
-    );
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
+const VBoardBox: React.FC<IBoardBox.IVProps> = props => {
+    const { boardData } = props;
 
     return (
-        <div css={BoardBoxStyle}>
-            <div css={TableHeadStyle}>
-                <div>No.</div>
-                <div>Title</div>
-                <div>Author</div>
-                <div>CreatedAt</div>
-                <div>UpdatedAt</div>
-            </div>
-
-            {posts.map((v, key) => (
-                <BoardItem
-                    key={key}
-                    no={v}
-                    title={v}
-                    author={v}
-                    createdAt={v}
-                    updatedAt={v}
-                />
-            ))}
-
-            <div css={ButtonBox}>
-                <Button
-                    name="더보기"
-                    width={180}
-                    height={50}
-                    fontSize={24}
+        <>
+            <table css={boardBoxStyle}>
+                <thead>
+                    <tr css={tableHeadStyle}>
+                        <th>No.</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>CreatedAt</th>
+                        <th>UpdatedAt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {boardData &&
+                        boardData.map((post, index) => (
+                            <BoardItem
+                                key={post.id}
+                                no={index + 1}
+                                title={post.title}
+                                author={post.author.nickname}
+                                createdAt={post.createdAt}
+                                updatedAt={post.updatedAt}
+                            />
+                        ))}
+                </tbody>
+            </table>
+            <div css={buttonContainer}>
+                <button
+                    css={largeButtonStyle}
                     onClick={() => {
-                        console.log("Show More Posts!!!!!!!");
+                        console.log("SHOW MORE POSTS!!!");
                     }}
-                />
+                >
+                    더보기
+                </button>
             </div>
-        </div>
+        </>
     );
 };
 
-const BoardBoxStyle = css`
+const boardBoxStyle = css`
     width: 1200px;
     margin: 100px auto 0;
 `;
-
-const TableHeadStyle = css`
+const tableHeadStyle = css`
     width: 1200px;
     height: 90px;
     display: flex;
@@ -70,9 +58,20 @@ const TableHeadStyle = css`
     font-size: 22px;
     background-color: #d9d9d9;
 `;
-const ButtonBox = css`
+const buttonContainer = css`
     margin-top: 50px;
     text-align: center;
+`;
+const largeButtonStyle = css`
+    width: 180px;
+    height: 50px;
+    text-align: center;
+    font-size: 24px;
+    color: #fff;
+    background-color: #4c87df;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
 `;
 
 export default VBoardBox;

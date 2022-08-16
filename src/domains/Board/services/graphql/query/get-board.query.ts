@@ -3,34 +3,29 @@ import { gql } from "graphql-request";
 export namespace GetBoardQuery {
     export interface IVariable {}
     export interface IResponse {
-        getBoard: {
-            board: Promise<string[]>;
-        };
+        board: Array<{
+            id: string;
+            title: string;
+            content: string;
+            author: {
+                nickname: string;
+            };
+            createdAt: string;
+            updatedAt: string;
+        }>;
     }
     export const Document = gql`
-        // query GetBoardQuery($limit: Number!) {
-            // board(limit: $limit) {
-            //     updatedAt
-            //     title
-            //     id
-            //     createdAt
-            //     author {
-            //         nickname
-            //     }
-            //     author_id
-            // }
-            query GetBoardQuery {
-                board {
-                  id
-                  title
-                  createdAt
-                  updatedAt
-                  author {
+        query GetBoardQuery($limit: Int!) {
+            board(limit: $limit) {
+                id
+                title
+                content
+                author {
                     nickname
-                  }
                 }
-              }
-              
+                createdAt
+                updatedAt
+            }
         }
     `;
 }

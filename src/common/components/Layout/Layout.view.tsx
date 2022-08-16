@@ -1,6 +1,4 @@
-import { css } from "@emotion/react";
-import Image from "next/image";
-import Header from "../Header";
+import Header from "@common/components/Header";
 import { ILayout } from "./Layout.interface";
 import { useRouter } from "next/router";
 

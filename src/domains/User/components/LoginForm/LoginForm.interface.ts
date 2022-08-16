@@ -6,10 +6,10 @@ export namespace ILoginForm {
     }
     export interface IVProps {
         register: UseFormRegister<IForm>;
-        onSubmit: () => void;
+        onClickLoginUser: () => void;
     }
     export interface IForm {
-        id: string;
-        privateKey: string;
+        loginAccountName: string;
+        loginPrivateKey: string;
     }
 }

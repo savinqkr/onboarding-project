@@ -1,8 +1,8 @@
-import type { AppProps } from "next/app";
-import Head from "next/head";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { RecoilRoot } from "recoil";
 import { Layout } from "@common/components";
+import type { AppProps } from "next/app";
+import { RecoilRoot } from "recoil";
+import Head from "next/head";
 
 const queryClient = new QueryClient();
 
