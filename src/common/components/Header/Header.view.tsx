@@ -4,8 +4,8 @@ import { Header } from "./Header.interface";
 import { MdOutlineRefresh } from "react-icons/md";
 
 const VHeader: React.FC<Header.IVProps> = ({
-    userLogout,
-    refreshToken,
+    onClickUserLogout,
+    onClickRefreshToken,
     haveNoToken,
     userNickname,
     sessionTime,
@@ -13,41 +13,40 @@ const VHeader: React.FC<Header.IVProps> = ({
     const router = useRouter();
     const pathList = ["/post/create/new", "/post/update/[id]"];
 
-    if (haveNoToken) {
-        return (
-            <div css={headerStyle}>
-                <div css={loginPositionStyle}>
-                    <div
-                        css={buttonStyle}
-                        onClick={() => router.push("/login")}
-                    >
-                        로그인
-                    </div>
-                </div>
-            </div>
-        );
-    }
     return (
         <div css={headerStyle}>
-            <div css={sessionGroupStyle}>
-                <span>세션 : {sessionTime}</span>
-                <button onClick={refreshToken}>
-                    <MdOutlineRefresh />
-                </button>
-            </div>
-            <div css={nickNameStyle}>{String(userNickname)}님 안녕하세요!</div>
+            {!haveNoToken && (
+                <>
+                    <div css={sessionGroupStyle}>
+                        <span>세션 : {sessionTime}</span>
+                        <button onClick={onClickRefreshToken}>
+                            <MdOutlineRefresh />
+                        </button>
+                    </div>
+                    <div css={{ fontSize: "24px" }}>
+                        {userNickname} 님 안녕하세요!
+                    </div>
+                </>
+            )}
             <div css={buttonGroupStyle}>
-                {!pathList.includes(router.pathname) && (
-                    <div
+                {!haveNoToken && !pathList.includes(router.pathname) && (
+                    <button
                         css={buttonStyle}
                         onClick={() => router.push("/post/create/new")}
                     >
                         게시글 추가
-                    </div>
+                    </button>
                 )}
-                <div css={buttonStyle} onClick={userLogout}>
-                    로그아웃
-                </div>
+                <button
+                    css={buttonStyle}
+                    onClick={
+                        haveNoToken
+                            ? () => router.push("/login")
+                            : onClickUserLogout
+                    }
+                >
+                    {haveNoToken ? "로그인" : "로그아웃"}
+                </button>
             </div>
         </div>
     );
@@ -76,14 +75,6 @@ const sessionGroupStyle = css`
         font-size: 18px;
         cursor: pointer;
     }
-`;
-const nickNameStyle = css`
-    font-size: 24px;
-`;
-const loginPositionStyle = css`
-    width: 100%;
-    display: flex;
-    justify-content: right;
 `;
 const buttonGroupStyle = css`
     width: 310px;

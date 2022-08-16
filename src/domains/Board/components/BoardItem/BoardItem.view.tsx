@@ -1,25 +1,22 @@
+import dayjs from "dayjs";
 import { css } from "@emotion/react";
 import { IBoardItem } from "./BoardItem.interface";
-import dayjs from "dayjs";
 
 const VBoardItem: React.FC<IBoardItem.IVProps> = props => {
     const { no, title, author, createdAt, updatedAt } = props;
 
-    const createDate = dayjs(createdAt);
-    const updateDate = dayjs(updatedAt);
-
     return (
-        <div css={BoardItemStyle}>
-            <div>{no}</div>
-            <div>{title}</div>
-            <div>{author}</div>
-            <div>{createDate.format("YYYY-MM-DD")}</div>
-            <div>{updateDate.format("YYYY-MM-DD")}</div>
-        </div>
+        <tr css={boardItemStyle}>
+            <td>{no}</td>
+            <td>{title}</td>
+            <td>{author}</td>
+            <td>{dayjs(createdAt).format("YYYY-MM-DD")}</td>
+            <td>{dayjs(updatedAt).format("YYYY-MM-DD")}</td>
+        </tr>
     );
 };
 
-const BoardItemStyle = css`
+const boardItemStyle = css`
     width: 1200px;
     height: 90px;
     margin-top: 4px;

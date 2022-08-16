@@ -6,11 +6,7 @@ const DetailsPost: NextPage = () => {
     const router = useRouter();
     const { id } = router.query;
 
-    return (
-        <>
-            <PostDetails postId={id} />
-        </>
-    );
+    return <PostDetails postId={id} />;
 };
 
 export default DetailsPost;

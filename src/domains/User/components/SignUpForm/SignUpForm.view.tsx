@@ -2,10 +2,10 @@ import { css } from "@emotion/react";
 import { ISignUpForm } from "./SignUpForm.interface";
 
 const VSignUpForm: React.FC<ISignUpForm.IVProps> = props => {
-    const { register, onSubmit, getSignature } = props;
+    const { register, onSubmitRegisterUser, onClickGetSignature } = props;
     return (
         <div css={signUpFormStyle}>
-            <form onSubmit={onSubmit} css={formStyle}>
+            <form onSubmit={onSubmitRegisterUser} css={formStyle}>
                 <label>AccountName</label>
                 <input
                     type="text"
@@ -21,16 +21,19 @@ const VSignUpForm: React.FC<ISignUpForm.IVProps> = props => {
                 <label>Signature</label>
                 <div css={signatureGroupStyle}>
                     <input
-                        // type="text"
                         type="password"
                         readOnly
                         placeholder="Signature"
                         {...register("registerSignature")}
                         css={signatureInputStyle}
                     />
-                    <div onClick={getSignature} css={getSignatureBtnStyle}>
+                    <button
+                        type="button"
+                        onClick={onClickGetSignature}
+                        css={getSignatureBtnStyle}
+                    >
                         받기
-                    </div>
+                    </button>
                 </div>
                 <div css={buttonGroupStyle}>
                     <button type="submit" css={submitBtnStyle}>

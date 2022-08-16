@@ -6,7 +6,7 @@ export namespace ILoginForm {
     }
     export interface IVProps {
         register: UseFormRegister<IForm>;
-        onSubmit: () => void;
+        onClickLoginUser: () => void;
     }
     export interface IForm {
         loginAccountName: string;

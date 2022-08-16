@@ -16,7 +16,7 @@ class BoardService implements IBoardService {
     }
 
     /**
-     * Get Board
+     * getBoard
      * @param limit 
      * @returns -- board : Array<{
         id: string;
@@ -39,7 +39,7 @@ class BoardService implements IBoardService {
     }
 
     /**
-     * Create Board
+     * createBoard
      * @param object -- { title, content, author_id }
      * @returns -- insert_board_one : Promise<{
         id: string;
@@ -56,7 +56,11 @@ class BoardService implements IBoardService {
         const { insert_board_one } = await this.client.request<
             CreateBoardQuery.IResponse,
             CreateBoardQuery.IVariable
-        >(CreateBoardQuery.Document, object);
+        >(CreateBoardQuery.Document, object, {
+            Authorization: `Bearer ${window.localStorage.getItem(
+                "accessToken"
+            )}`,
+        });
 
         return insert_board_one;
     }

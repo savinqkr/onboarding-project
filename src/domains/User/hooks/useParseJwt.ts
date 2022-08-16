@@ -1,4 +1,4 @@
-export default function useParse(token: any, haveNoToken: boolean): any {
+export default function useParseJwt(token: any, haveNoToken: boolean): any {
     if (!haveNoToken) {
         const base64Url = token.split(".")[1];
         const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");

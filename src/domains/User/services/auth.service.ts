@@ -44,15 +44,11 @@ class AuthService implements IAuthService {
      * @returns -- { accessToken, refreshToken }
      */
     public async loginUser(args: ILoginUser.IInput) {
-        const {
-            loginUser,
-            // : { accessToken, refreshToken },
-        } = await this.client.request<
+        const { loginUser } = await this.client.request<
             LoginUserQuery.IResponse,
             LoginUserQuery.IVariable
         >(LoginUserQuery.Document, args);
 
-        // return { accessToken, refreshToken };
         return loginUser;
     }
 
@@ -62,14 +58,12 @@ class AuthService implements IAuthService {
      * @returns -- { accessToken, refreshToken }
      */
     public async registerUser(args: IRegisterUser.IInput) {
-        const {
-            registerUser: { accessToken, refreshToken },
-        } = await this.client.request<
+        const { registerUser } = await this.client.request<
             RegisterUserQuery.IResponse,
             RegisterUserQuery.IVariable
         >(RegisterUserQuery.Document, args);
 
-        return { accessToken, refreshToken };
+        return registerUser;
     }
 
     /**
@@ -81,7 +75,11 @@ class AuthService implements IAuthService {
         const { refreshJwt } = await this.client.request<
             RefreshJwtQuery.IResponse,
             RefreshJwtQuery.IVariable
-        >(RefreshJwtQuery.Document, args);
+        >(RefreshJwtQuery.Document, args, {
+            Authorization: `Bearer ${window.localStorage.getItem(
+                "accessToken"
+            )}`,
+        });
 
         return refreshJwt;
     }

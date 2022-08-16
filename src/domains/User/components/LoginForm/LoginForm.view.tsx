@@ -3,43 +3,42 @@ import { ILoginForm } from "./LoginForm.interface";
 import { useRouter } from "next/router";
 
 const VLoginForm: React.FC<ILoginForm.IVProps> = props => {
-    const { register, onSubmit } = props;
+    const { register, onClickLoginUser } = props;
     const router = useRouter();
     return (
-        <div css={LoginFormStyle()}>
-            <form onSubmit={onSubmit} css={FormStyle}>
+        <div css={loginFormStyle}>
+            <form onSubmit={onClickLoginUser} css={formStyle}>
                 <label>AccountName</label>
                 <input
                     type="text"
                     placeholder="아이디"
                     {...register("loginAccountName")}
                 />
-
                 <label>PrivateKey</label>
                 <input
-                    // type="password"
-                    type="text"
+                    type="password"
                     placeholder="패스워드"
                     {...register("loginPrivateKey")}
                 />
 
-                <div css={ButtonGroupStyle}>
-                    <button type="submit" css={SubmitBtnStyle}>
+                <div css={buttonGroupStyle}>
+                    <button type="submit" css={buttonStyle}>
                         로그인
                     </button>
-                    <div
-                        css={signUpBtnStyle}
+                    <button
+                        type="button"
+                        css={buttonStyle}
                         onClick={() => router.push("/signup")}
                     >
                         회원가입
-                    </div>
+                    </button>
                 </div>
             </form>
         </div>
     );
 };
 
-const LoginFormStyle = (backgroundColor?: string) => css`
+const loginFormStyle = css`
     width: 650px;
     min-height: 490px;
     margin: 140px auto 0;
@@ -47,9 +46,9 @@ const LoginFormStyle = (backgroundColor?: string) => css`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ${backgroundColor ? backgroundColor : "#D9D9D9"};
+    background-color: #d9d9d9;
 `;
-const FormStyle = css`
+const formStyle = css`
     display: flex;
     flex-direction: column;
     & > label {
@@ -68,35 +67,23 @@ const FormStyle = css`
         }
     }
 `;
-const ButtonGroupStyle = css`
+const buttonGroupStyle = css`
     width: 400px;
     height: 50px;
     margin-top: 50px;
     display: flex;
     justify-content: space-between;
 `;
-const SubmitBtnStyle = css`
-    padding: 10px;
+const buttonStyle = css`
     width: 180px;
     height: 50px;
     font-size: 24px;
     border-radius: 5px;
-    text-align: center;
-    color: #fff;
-    background-color: #4c87df;
-    border: none;
-    cursor: pointer;
-`;
-const signUpBtnStyle = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 180px;
-    height: 50px;
-    font-size: 24px;
     color: #fff;
     background-color: #4c87df;
-    border-radius: 5px;
     border: none;
     cursor: pointer;
 `;

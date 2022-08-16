@@ -10,29 +10,24 @@ const LoginForm: React.FC<ILoginForm.IProps> = () => {
     const router = useRouter();
     const { register, handleSubmit, getValues } = useForm<ILoginForm.IForm>();
 
-    // Get Signature
-    const {
-        data: loginSignatureData,
-        refetch: loginSignatureRefetch,
-    } = useQuery(
-        ["getLoginSignature"],
-        () =>
-            authService.getSignature({
-                accountName: getValues("loginAccountName"),
-                privateKey: String(process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY),
-            }),
-        {
-            enabled: false,
-            cacheTime: 0,
-        }
-    );
+    // getSignature (login) -- useQuery
+    const { data: loginSignatureData, refetch: loginSignatureRefetch } =
+        useQuery(
+            ["getLoginSignature"],
+            () =>
+                authService.getSignature({
+                    accountName: getValues("loginAccountName"),
+                    privateKey: String(
+                        process.env.NEXT_PUBLIC_HASURA_PRIVATEKEY
+                    ),
+                }),
+            {
+                enabled: false,
+                cacheTime: 0,
+            }
+        );
 
-    /**
-     * Login User
-     * @param accountName
-     * @param signature
-     * @returns -- accessToken, refreshToken
-     */
+    // loginUser -- useQuery
     const { data: loginUserData, refetch: loginUserRefetch } = useQuery(
         ["loginUser"],
         () =>
@@ -46,7 +41,8 @@ const LoginForm: React.FC<ILoginForm.IProps> = () => {
         }
     );
 
-    const onSubmit = () => {
+    // onClickLoginUser
+    const onClickLoginUser = () => {
         if (
             getValues("loginAccountName") === "" ||
             getValues("loginPrivateKey") === ""
@@ -58,26 +54,29 @@ const LoginForm: React.FC<ILoginForm.IProps> = () => {
     };
 
     useEffect(() => {
-        if (loginSignatureData !== undefined) {
-            loginUserRefetch();
-        }
+        if (!loginSignatureData) return;
+        loginUserRefetch();
     }, [loginSignatureData]);
 
     useEffect(() => {
-        if (loginUserData !== undefined) {
-            window.localStorage.setItem(
-                "accessToken",
-                String(loginUserData.accessToken)
-            );
-            window.localStorage.setItem(
-                "refreshToken",
-                String(loginUserData.refreshToken)
-            );
-            router.push("/");
-        }
+        if (!loginUserData) return;
+        window.localStorage.setItem(
+            "accessToken",
+            String(loginUserData.accessToken)
+        );
+        window.localStorage.setItem(
+            "refreshToken",
+            String(loginUserData.refreshToken)
+        );
+        router.push("/");
     }, [loginUserData]);
 
-    return <VLoginForm register={register} onSubmit={handleSubmit(onSubmit)} />;
+    return (
+        <VLoginForm
+            register={register}
+            onClickLoginUser={handleSubmit(onClickLoginUser)}
+        />
+    );
 };
 
 export default LoginForm;
