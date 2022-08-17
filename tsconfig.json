@@ -21,6 +21,8 @@
             "@domains/*": ["src/domains/*"],
             "@recoil/*": ["src/recoil/*"],
             "@Board/*": ["src/domains/Board/*"],
+            "@Post/*": ["src/domains/Post/*"],
+            "@Comment/*": ["src/domains/Comment/*"],
             "@User/*": ["src/domains/User/*"]
         },
         "incremental": true

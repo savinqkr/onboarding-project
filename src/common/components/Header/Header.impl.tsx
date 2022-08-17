@@ -28,7 +28,9 @@ const Header: React.FC<Header.IProps> = () => {
             haveNoToken
         );
         if (userInfo) {
+            // console.log(userInfo);
             window.localStorage.setItem("accountName", userInfo.accountName);
+            window.localStorage.setItem("userId", userInfo.sub);
             sessionTime = useCounter(userInfo.exp);
         }
     }
@@ -70,9 +72,7 @@ const Header: React.FC<Header.IProps> = () => {
             "refreshToken",
             String(refreshJwtData.refreshToken)
         );
-        setTimeout(() => {
-            router.push("/");
-        }, 2000);
+        router.reload();
     }, [refreshJwtData]);
 
     return (

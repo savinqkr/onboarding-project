@@ -31,6 +31,7 @@ const VHeader: React.FC<Header.IVProps> = ({
             <div css={buttonGroupStyle}>
                 {!haveNoToken && !pathList.includes(router.pathname) && (
                     <button
+                        type="button"
                         css={buttonStyle}
                         onClick={() => router.push("/post/create/new")}
                     >
@@ -38,6 +39,7 @@ const VHeader: React.FC<Header.IVProps> = ({
                     </button>
                 )}
                 <button
+                    type="button"
                     css={buttonStyle}
                     onClick={
                         haveNoToken

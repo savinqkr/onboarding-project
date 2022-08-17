@@ -4,12 +4,11 @@ import { IPostForm } from "./PostForm.interface";
 
 const VPostDetails: React.FC<IPostForm.IVProps> = props => {
     const router = useRouter();
-
-    const { postId, register, onSubmit } = props;
+    const { postId, register, onClickCreatePost } = props;
 
     return (
         <div css={postDetailsStyle}>
-            <form onSubmit={onSubmit} css={formStyle}>
+            <form onSubmit={onClickCreatePost} css={formStyle}>
                 <h2>
                     {router.pathname === "/post/create/new" ? (
                         <span>NEW POST</span>

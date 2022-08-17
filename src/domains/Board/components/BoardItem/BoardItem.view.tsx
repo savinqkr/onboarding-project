@@ -3,10 +3,11 @@ import { css } from "@emotion/react";
 import { IBoardItem } from "./BoardItem.interface";
 
 const VBoardItem: React.FC<IBoardItem.IVProps> = props => {
-    const { no, title, author, createdAt, updatedAt } = props;
+    const { no, title, author, createdAt, updatedAt, onClickViewDetails } =
+        props;
 
     return (
-        <tr css={boardItemStyle}>
+        <tr css={boardItemStyle} onClick={onClickViewDetails}>
             <td>{no}</td>
             <td>{title}</td>
             <td>{author}</td>
@@ -26,5 +27,6 @@ const boardItemStyle = css`
     font-size: 20px;
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
+    cursor: pointer;
 `;
 export default VBoardItem;
