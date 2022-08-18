@@ -23,6 +23,7 @@ const VBoardBox: React.FC<IBoardBox.IVProps> = props => {
                             <BoardItem
                                 key={post.id}
                                 no={index + 1}
+                                id={post.id}
                                 title={post.title}
                                 author={post.author.nickname}
                                 createdAt={post.createdAt}

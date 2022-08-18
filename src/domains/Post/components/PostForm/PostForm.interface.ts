@@ -1,12 +1,11 @@
 import { UseFormRegister } from "react-hook-form";
 
-export namespace IPostDetails {
-    export interface IProps {
-        postId: string | string[] | undefined;
-    }
+export namespace IPostForm {
+    export interface IProps {}
     export interface IVProps extends IProps {
+        postId: string;
         register: UseFormRegister<IForm>;
-        onSubmit: () => void;
+        onClickCreatePost: () => void;
     }
     export interface IForm {
         postTitle: string;

@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { PostForm } from "@/domains/Board/components";
+import { PostForm } from "@Post/components";
 
 const WritePost: NextPage = () => {
     const router = useRouter();
