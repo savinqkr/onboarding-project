@@ -6,8 +6,9 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 const VPostDetails: React.FC<IPostDetails.IVProps> = props => {
-    const { postId, postData } = props;
+    const { postId, postData, onClickDeletePost } = props;
     const router = useRouter();
+
     const [like, setLike] = useState(false);
 
     return (
@@ -43,25 +44,28 @@ const VPostDetails: React.FC<IPostDetails.IVProps> = props => {
                         댓글 쓰기
                     </button>
                 </div>
-                <div css={buttonInnerStyle}>
-                    <button
-                        css={mediumButtonStyle}
-                        onClick={() =>
-                            router.push({
-                                pathname: "/post/update/[id]",
-                                query: { id: postId },
-                            })
-                        }
-                    >
-                        게시글 수정
-                    </button>
-                    <button
-                        css={mediumButtonStyle}
-                        onClick={() => console.log("게시글 삭제!!!!!")}
-                    >
-                        게시글 삭제
-                    </button>
-                </div>
+                {typeof window !== "undefined" &&
+                    postData?.authorId === localStorage.getItem("userId") && (
+                        <div css={buttonInnerStyle}>
+                            <button
+                                css={mediumButtonStyle}
+                                onClick={() =>
+                                    router.push({
+                                        pathname: "/post/update/[id]",
+                                        query: { id: postId },
+                                    })
+                                }
+                            >
+                                게시글 수정
+                            </button>
+                            <button
+                                css={mediumButtonStyle}
+                                onClick={onClickDeletePost}
+                            >
+                                게시글 삭제
+                            </button>
+                        </div>
+                    )}
             </div>
         </>
     );

@@ -7,14 +7,16 @@ export namespace CreatePostQuery {
     }
 
     export interface IResponse {
-        insert_board_one: {
+        newPost: {
             id: string;
         };
     }
 
     export const Document = gql`
         mutation CreatePostQuery($title: String, $content: String) {
-            insert_board_one(object: { content: $content, title: $title }) {
+            newPost: insert_board_one(
+                object: { content: $content, title: $title }
+            ) {
                 id
             }
         }

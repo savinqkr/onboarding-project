@@ -5,13 +5,17 @@ import boardService from "@Board/services/board.service";
 
 const BoardBox: React.FC<IBoardBox.IProps> = () => {
     // getBoard -- useQuery
-    const { data: boardData, isLoading } = useQuery(["getBoard"], () =>
-        boardService.getBoard({ limit: 20 })
+    const { data: boardDatas, isLoading } = useQuery(
+        ["getBoard"],
+        () => boardService.getBoard({ limit: 20 }),
+        {
+            refetchOnMount: "always",
+        }
     );
 
     if (isLoading) return <p>Loading . . .</p>;
 
-    return <VBoardBox boardData={boardData} />;
+    return <VBoardBox boardDatas={boardDatas} />;
 };
 
 export default BoardBox;
