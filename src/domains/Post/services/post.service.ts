@@ -4,8 +4,14 @@ import {
     IPostService,
     ICreatePost,
     IDeletePost,
+    IUpdatePost,
 } from "./post.service.interface";
-import { GetPostQuery, CreatePostQuery, DeletePostQuery } from "./graphql";
+import {
+    GetPostQuery,
+    CreatePostMutation,
+    DeletePostMutation,
+    UpdatePostMutation,
+} from "./graphql";
 
 class PostService implements IPostService {
     private static instance: PostService;
@@ -48,9 +54,9 @@ class PostService implements IPostService {
      */
     public async createPost(objects: ICreatePost.IInput) {
         const { newPost } = await this.client.request<
-            CreatePostQuery.IResponse,
-            CreatePostQuery.IVariable
-        >(CreatePostQuery.Document, objects, {
+            CreatePostMutation.IResponse,
+            CreatePostMutation.IVariable
+        >(CreatePostMutation.Document, objects, {
             Authorization:
                 typeof window !== "undefined"
                     ? `Bearer ${localStorage.getItem("accessToken")}`
@@ -69,9 +75,9 @@ class PostService implements IPostService {
      */
     public async deletePost(id: IDeletePost.IInput) {
         const { deletedPost } = await this.client.request<
-            DeletePostQuery.IResponse,
-            DeletePostQuery.IVariable
-        >(DeletePostQuery.Document, id, {
+            DeletePostMutation.IResponse,
+            DeletePostMutation.IVariable
+        >(DeletePostMutation.Document, id, {
             Authorization:
                 typeof window !== "undefined"
                     ? `Bearer ${localStorage.getItem("accessToken")}`
@@ -79,6 +85,31 @@ class PostService implements IPostService {
         });
 
         return deletedPost;
+    }
+
+    /**
+     * updatePost
+     * @param { id, title, content }
+     * @returns updatedPost -- update_board_by_pk: {
+     * id: string
+     * title: string
+     * content: string
+     * author : {
+     * nickname: string}
+     * }
+     */
+    public async updatePost(args: IUpdatePost.IInput) {
+        const { updatedPost } = await this.client.request<
+            UpdatePostMutation.IResponse,
+            UpdatePostMutation.IVariable
+        >(UpdatePostMutation.Document, args, {
+            Authorization:
+                typeof window !== "undefined"
+                    ? `Bearer ${localStorage.getItem("accessToken")}`
+                    : "",
+        });
+
+        return updatedPost;
     }
 }
 

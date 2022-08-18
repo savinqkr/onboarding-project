@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 
-export namespace DeletePostQuery {
+export namespace DeletePostMutation {
     export interface IVariable {
         id: string;
     }
@@ -10,7 +10,7 @@ export namespace DeletePostQuery {
         };
     }
     export const Document = gql`
-        mutation DeletePostQuery($id: uuid!) {
+        mutation DeletePostMutation($id: uuid!) {
             deletedPost: delete_board_by_pk(id: $id) {
                 id
             }

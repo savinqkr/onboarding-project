@@ -9,7 +9,7 @@ const BoardBox: React.FC<IBoardBox.IProps> = () => {
         ["getBoard"],
         () => boardService.getBoard({ limit: 20 }),
         {
-            refetchOnMount: "always",
+            keepPreviousData: true,
         }
     );
 

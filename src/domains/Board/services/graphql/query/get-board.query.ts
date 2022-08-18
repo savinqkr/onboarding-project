@@ -16,7 +16,7 @@ export namespace GetBoardQuery {
     }
     export const Document = gql`
         query GetBoardQuery($limit: Int!) {
-            board(limit: $limit) {
+            board(limit: $limit, order_by: { updatedAt: desc }) {
                 id
                 title
                 content
