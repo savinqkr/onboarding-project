@@ -54,7 +54,8 @@ const Header: React.FC<Header.IProps> = () => {
         const answer = confirm("로그아웃 하시겠습니까?");
         if (answer) {
             window.localStorage.clear();
-            router.push("/");
+            // router.push("/");
+            router.reload();
         }
     };
 
