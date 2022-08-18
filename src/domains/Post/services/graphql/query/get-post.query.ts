@@ -5,7 +5,7 @@ export namespace GetPostQuery {
         id: string;
     }
     export interface IResponse {
-        board_by_pk: {
+        postDetails: {
             author: {
                 nickname: string;
                 // id: string;
@@ -13,6 +13,7 @@ export namespace GetPostQuery {
             id: string;
             title: string;
             content: string;
+            author_id: string;
             createdAt: string;
             updatedAt: string;
             // view_count: number;
@@ -20,7 +21,7 @@ export namespace GetPostQuery {
     }
     export const Document = gql`
         query GetPostQuery($id: uuid!) {
-            board_by_pk(id: $id) {
+            postDetails: board_by_pk(id: $id) {
                 author {
                     nickname
                     #id
@@ -28,6 +29,7 @@ export namespace GetPostQuery {
                 id
                 title
                 content
+                author_id
                 createdAt
                 updatedAt
                 #view_count

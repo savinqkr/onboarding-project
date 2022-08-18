@@ -1,6 +1,11 @@
 import { GraphQLClient } from "graphql-request";
-import { IGetPost, IPostService, ICreatePost } from "./post.service.interface";
-import { GetPostQuery, CreatePostQuery } from "./graphql";
+import {
+    IGetPost,
+    IPostService,
+    ICreatePost,
+    IDeletePost,
+} from "./post.service.interface";
+import { GetPostQuery, CreatePostQuery, DeletePostQuery } from "./graphql";
 
 class PostService implements IPostService {
     private static instance: PostService;
@@ -13,8 +18,8 @@ class PostService implements IPostService {
 
     /**
      * getPost
-     * @param id
-     * @returns -- board_by_pk : {{
+     * @param { id }
+     * @returns postDetails -- board_by_pk : {
      *     author: {
      *         nickname: string;
      *     };
@@ -26,31 +31,54 @@ class PostService implements IPostService {
      * }
      */
     public async getPost(id: IGetPost.IInput) {
-        const { board_by_pk } = await this.client.request<
+        const { postDetails } = await this.client.request<
             GetPostQuery.IResponse,
             GetPostQuery.IVariable
         >(GetPostQuery.Document, id);
 
-        return board_by_pk;
+        return postDetails;
     }
 
     /**
      * createPost
-     * @param {author_id, title, content}
-     * @returns -- id
+     * @param { author_id, title, content }
+     * @returns newPost -- insert_board_one {
+     *
+     * }
      */
     public async createPost(objects: ICreatePost.IInput) {
-        const { insert_board_one } = await this.client.request<
+        const { newPost } = await this.client.request<
             CreatePostQuery.IResponse,
             CreatePostQuery.IVariable
         >(CreatePostQuery.Document, objects, {
             Authorization:
                 typeof window !== "undefined"
-                    ? `Bearer ${window.localStorage.getItem("accessToken")}`
+                    ? `Bearer ${localStorage.getItem("accessToken")}`
                     : "",
         });
 
-        return insert_board_one;
+        return newPost;
+    }
+
+    /**
+     * deletePost
+     * @param { id }
+     * @returns deletedPost -- delete_board_by_pk: {
+     * id: string
+     * }
+     */
+    public async deletePost(id: IDeletePost.IInput) {
+        const { deletedPost } = await this.client.request<
+            DeletePostQuery.IResponse,
+            DeletePostQuery.IVariable
+        >(DeletePostQuery.Document, id, {
+            Authorization:
+                typeof window !== "undefined"
+                    ? `Bearer ${localStorage.getItem("accessToken")}`
+                    : "",
+        });
+
+        return deletedPost;
     }
 }
 

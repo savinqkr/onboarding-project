@@ -10,15 +10,14 @@ const PostDetails: React.FC<IPostForm.IProps> = () => {
     const router = useRouter();
 
     // postId
-    // const { query } = useRouter();
     const postId = (router.query.id as string) ?? "";
 
     if (typeof window !== "undefined")
         console.log(window.localStorage.getItem("userId"));
 
-    // createPost
-    const { data: createdBoardData, mutate: createBoardRefetch } = useMutation(
-        ["createBoard"],
+    // createPost -- useMutation
+    const { data: createdPostData, mutate: createPostMutate } = useMutation(
+        ["createPost"],
         () =>
             postService.createPost({
                 title: getValues("postTitle"),
@@ -28,10 +27,7 @@ const PostDetails: React.FC<IPostForm.IProps> = () => {
 
     // onClickCreatePost
     const onClickCreatePost = () => {
-        console.log("--- 게시글 업로드 ---");
-        console.log(getValues("postTitle"));
-        console.log(getValues("postContent"));
-        createBoardRefetch();
+        createPostMutate();
         router.push("/");
     };
 
