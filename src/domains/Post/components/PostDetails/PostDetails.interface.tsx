@@ -11,7 +11,7 @@ export namespace IPostDetails {
                   id: string;
                   title: string;
                   content: string;
-                  author_id: string;
+                  authorId: string;
                   createdAt: string;
                   updatedAt: string;
               }

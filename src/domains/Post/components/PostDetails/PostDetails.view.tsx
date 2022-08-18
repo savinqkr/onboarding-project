@@ -45,7 +45,7 @@ const VPostDetails: React.FC<IPostDetails.IVProps> = props => {
                     </button>
                 </div>
                 {typeof window !== "undefined" &&
-                    postData?.author_id === localStorage.getItem("userId") && (
+                    postData?.authorId === localStorage.getItem("userId") && (
                         <div css={buttonInnerStyle}>
                             <button
                                 css={mediumButtonStyle}

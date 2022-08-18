@@ -1,7 +1,7 @@
 export namespace IBoardBox {
     export interface IProps {}
     export interface IVProps {
-        boardData:
+        boardDatas:
             | {
                   id: string;
                   title: string;

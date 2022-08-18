@@ -19,7 +19,7 @@ class PostService implements IPostService {
     /**
      * getPost
      * @param { id }
-     * @returns postDetails -- board_by_pk : {
+     * @returns postDetail -- board_by_pk : {
      *     author: {
      *         nickname: string;
      *     };
@@ -31,12 +31,12 @@ class PostService implements IPostService {
      * }
      */
     public async getPost(id: IGetPost.IInput) {
-        const { postDetails } = await this.client.request<
+        const { postDetail } = await this.client.request<
             GetPostQuery.IResponse,
             GetPostQuery.IVariable
         >(GetPostQuery.Document, id);
 
-        return postDetails;
+        return postDetail;
     }
 
     /**

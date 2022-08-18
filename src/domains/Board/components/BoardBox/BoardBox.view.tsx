@@ -3,7 +3,7 @@ import { IBoardBox } from "./BoardBox.interface";
 import BoardItem from "../BoardItem";
 
 const VBoardBox: React.FC<IBoardBox.IVProps> = props => {
-    const { boardData } = props;
+    const { boardDatas } = props;
 
     return (
         <>
@@ -18,8 +18,8 @@ const VBoardBox: React.FC<IBoardBox.IVProps> = props => {
                     </tr>
                 </thead>
                 <tbody>
-                    {boardData &&
-                        boardData.map((post, index) => (
+                    {boardDatas &&
+                        boardDatas.map((post, index) => (
                             <BoardItem
                                 key={post.id}
                                 no={index + 1}
