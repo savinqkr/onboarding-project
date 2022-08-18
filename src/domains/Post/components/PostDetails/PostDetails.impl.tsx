@@ -4,12 +4,12 @@ import { IPostDetails } from "./PostDetails.interface";
 import postService from "../../services/post.service";
 import VPostDetails from "./PostDetails.view";
 
-const PostDetails: React.FC<IPostDetails.IProps> = props => {
+const PostDetails: React.FC<IPostDetails.IProps> = () => {
+    // postId
     const { query } = useRouter();
-    // const { postId } = props;
     const postId = (query.id as string) ?? "";
 
-    // getPost --useQuery
+    // getPost -- useQuery
     const { data: postData, isLoading } = useQuery(
         ["getPost"],
         () => postService.getPost({ id: postId }),
@@ -20,7 +20,7 @@ const PostDetails: React.FC<IPostDetails.IProps> = props => {
 
     if (isLoading) return <p>Loading...</p>;
 
-    return <VPostDetails {...props} postData={postData} />;
+    return <VPostDetails postId={postId} postData={postData} />;
 };
 
 export default PostDetails;

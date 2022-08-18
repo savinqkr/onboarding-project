@@ -1,9 +1,7 @@
 export namespace IPostDetails {
-    export interface IProps {
-        // postId: string | string[] | undefined;
-        postId: string;
-    }
+    export interface IProps {}
     export interface IVProps extends IProps {
+        postId: string;
         postData:
             | {
                   author: {

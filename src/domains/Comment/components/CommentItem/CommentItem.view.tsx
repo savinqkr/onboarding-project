@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { ICommentItem } from "./Comment.interface";
+import { ICommentItem } from "./CommentItem.interface";
 
 const VCommentItem: React.FC<ICommentItem.IVProps> = props => {
     const { postId } = props;

@@ -5,9 +5,13 @@ import { IPostForm } from "./PostForm.interface";
 import VPostForm from "./PostForm.view";
 import postService from "../../services/post.service";
 
-const PostDetails: React.FC<IPostForm.IProps> = props => {
+const PostDetails: React.FC<IPostForm.IProps> = () => {
     const { register, handleSubmit, getValues } = useForm<IPostForm.IForm>();
     const router = useRouter();
+
+    // postId
+    // const { query } = useRouter();
+    const postId = (router.query.id as string) ?? "";
 
     if (typeof window !== "undefined")
         console.log(window.localStorage.getItem("userId"));
@@ -33,7 +37,7 @@ const PostDetails: React.FC<IPostForm.IProps> = props => {
 
     return (
         <VPostForm
-            {...props}
+            postId={postId}
             register={register}
             onClickCreatePost={handleSubmit(onClickCreatePost)}
         />

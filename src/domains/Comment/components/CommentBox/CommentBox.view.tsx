@@ -2,16 +2,14 @@ import { css } from "@emotion/react";
 import { ICommentBox } from "./CommentBox.interface";
 import CommentItem from "../CommentItem";
 
-const VCommentBox: React.FC<ICommentBox.IVProps> = props => {
-    const { postId } = props;
-
-    const commentList = [1, 2, 3];
+const VCommentBox: React.FC<ICommentBox.IVProps> = () => {
+    const commentList = [1, 2, 3]; // 임시
 
     return (
         <>
             <div css={commentBoxStyle}>
                 {commentList.map((comment, index) => (
-                    <CommentItem postId={postId} />
+                    <CommentItem />
                 ))}
             </div>
             <button

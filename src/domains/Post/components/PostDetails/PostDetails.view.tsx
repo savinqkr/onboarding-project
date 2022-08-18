@@ -14,13 +14,13 @@ const VPostDetails: React.FC<IPostDetails.IVProps> = props => {
         <>
             <div css={postInfoStyle}>
                 <h1>{postData?.title}</h1>
+                <p>{`by ${postData?.author.nickname}`}</p>
                 <p>
-                    by <span>{postData?.author.nickname}</span>
-                </p>
-                <p>
-                    {dayjs(postData?.createdAt).format("YYYY-MM-DD HH:mm:ss")}
-                    <span>/</span>
-                    {dayjs(postData?.updatedAt).format("YYYY-MM-DD HH:mm:ss")}
+                    {`${dayjs(postData?.createdAt).format(
+                        "YYYY-MM-DD HH:mm:ss"
+                    )} / ${dayjs(postData?.updatedAt).format(
+                        "YYYY-MM-DD HH:mm:ss"
+                    )}`}
                 </p>
             </div>
             <div css={postContentStyle}>{postData?.content}</div>
@@ -28,7 +28,6 @@ const VPostDetails: React.FC<IPostDetails.IVProps> = props => {
                 <div css={buttonInnerStyle}>
                     <div css={likeInfoStyle}>
                         <div css={likeBtnStyle} onClick={() => setLike(!like)}>
-                            {/* <MdFavoriteBorder size="36" /> */}
                             {like ? (
                                 <MdFavorite size="36" color="red" />
                             ) : (
@@ -47,7 +46,12 @@ const VPostDetails: React.FC<IPostDetails.IVProps> = props => {
                 <div css={buttonInnerStyle}>
                     <button
                         css={mediumButtonStyle}
-                        onClick={() => router.push(`/post/update/${postId}`)}
+                        onClick={() =>
+                            router.push({
+                                pathname: "/post/update/[id]",
+                                query: { id: postId },
+                            })
+                        }
                     >
                         게시글 수정
                     </button>
@@ -73,16 +77,10 @@ const postInfoStyle = css`
     }
     & > p:first-of-type {
         font-size: 26px;
-        & > span {
-            font-weight: 600;
-        }
     }
     & > p:last-of-type {
         color: #808080;
         line-height: 0;
-    }
-    span {
-        padding: 0 10px;
     }
 `;
 const postContentStyle = css`

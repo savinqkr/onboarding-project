@@ -3,12 +3,11 @@ import { IPostBox } from "./PostBox.interface";
 import { PostDetails } from "@Post/components";
 import { CommentBox } from "@Comment/components";
 
-const VPostBox: React.FC<IPostBox.IVProps> = props => {
-    const { postId } = props;
+const VPostBox: React.FC<IPostBox.IVProps> = () => {
     return (
         <div css={postBoxStyle}>
-            <PostDetails postId={postId} />
-            <CommentBox postId={postId} />
+            <PostDetails />
+            <CommentBox />
         </div>
     );
 };
