@@ -6,6 +6,9 @@ export namespace IPostForm {
         postId: string;
         register: UseFormRegister<IForm>;
         onClickCreatePost: () => void;
+        onClickUpdatePost: () => void;
+        title: string;
+        content: string;
     }
     export interface IForm {
         postTitle: string;

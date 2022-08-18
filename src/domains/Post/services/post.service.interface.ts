@@ -1,4 +1,9 @@
-import { GetPostQuery, CreatePostQuery, DeletePostQuery } from "./graphql";
+import {
+    GetPostQuery,
+    CreatePostQuery,
+    DeletePostQuery,
+    UpdatePostQuery,
+} from "./graphql";
 
 export namespace IGetPost {
     export interface IInput extends GetPostQuery.IVariable {}
@@ -8,6 +13,9 @@ export namespace ICreatePost {
 }
 export namespace IDeletePost {
     export interface IInput extends DeletePostQuery.IVariable {}
+}
+export namespace IUpdatePost {
+    export interface IInput extends UpdatePostQuery.IVariable {}
 }
 
 export interface IPostService {
@@ -26,4 +34,14 @@ export interface IPostService {
     createPost(object: ICreatePost.IInput): Promise<{ id: string }>;
     // deletePost
     deletePost(id: IDeletePost.IInput): Promise<{ id: string } | undefined>;
+    // updatePost
+    updatePost(
+        pk_colums: IUpdatePost.IInput,
+        _set: IUpdatePost.IInput
+    ): Promise<{
+        id: string;
+        title: string;
+        content: string;
+        author: { nickname: string };
+    }>;
 }

@@ -4,27 +4,36 @@ import { IPostForm } from "./PostForm.interface";
 
 const VPostDetails: React.FC<IPostForm.IVProps> = props => {
     const router = useRouter();
-    const { postId, register, onClickCreatePost } = props;
+    const {
+        postId,
+        register,
+        onClickCreatePost,
+        onClickUpdatePost,
+        title,
+        content,
+    } = props;
 
     return (
         <div css={postDetailsStyle}>
-            <form onSubmit={onClickCreatePost} css={formStyle}>
-                <h2>
-                    {router.pathname === "/post/create/new" ? (
-                        <span>NEW POST</span>
-                    ) : (
-                        <span>EDIT POST ({postId})</span>
-                    )}
-                </h2>
+            <form
+                onSubmit={!postId ? onClickCreatePost : onClickUpdatePost}
+                css={formStyle}
+            >
+                <h2>{!postId ? "NEW POST" : "EDIT POST"}</h2>
                 <label>Title</label>
                 <input
                     type="text"
                     placeholder="제목"
                     autoComplete="off"
+                    defaultValue={title}
                     {...register("postTitle")}
                 />
                 <label>Content</label>
-                <textarea placeholder="내용" {...register("postContent")} />
+                <textarea
+                    placeholder="내용"
+                    defaultValue={content}
+                    {...register("postContent")}
+                />
                 <div css={buttonContainer}>
                     <button type="submit" css={largeButtonStyle}>
                         {router.pathname === "/post/create/new" ? (

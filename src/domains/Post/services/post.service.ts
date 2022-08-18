@@ -4,8 +4,14 @@ import {
     IPostService,
     ICreatePost,
     IDeletePost,
+    IUpdatePost,
 } from "./post.service.interface";
-import { GetPostQuery, CreatePostQuery, DeletePostQuery } from "./graphql";
+import {
+    GetPostQuery,
+    CreatePostQuery,
+    DeletePostQuery,
+    UpdatePostQuery,
+} from "./graphql";
 
 class PostService implements IPostService {
     private static instance: PostService;
@@ -79,6 +85,31 @@ class PostService implements IPostService {
         });
 
         return deletedPost;
+    }
+
+    /**
+     * updatePost
+     * @param { id, title, content }
+     * @returns updatedPost -- update_board_by_pk: {
+     * id: string
+     * title: string
+     * content: string
+     * author : {
+     * nickname: string}
+     * }
+     */
+    public async updatePost(args: IUpdatePost.IInput) {
+        const { updatedPost } = await this.client.request<
+            UpdatePostQuery.IResponse,
+            UpdatePostQuery.IVariable
+        >(UpdatePostQuery.Document, args, {
+            Authorization:
+                typeof window !== "undefined"
+                    ? `Bearer ${localStorage.getItem("accessToken")}`
+                    : "",
+        });
+
+        return updatedPost;
     }
 }
 
