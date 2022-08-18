@@ -1,21 +1,21 @@
 import {
     GetPostQuery,
-    CreatePostQuery,
-    DeletePostQuery,
-    UpdatePostQuery,
+    CreatePostMutation,
+    DeletePostMutation,
+    UpdatePostMutation,
 } from "./graphql";
 
 export namespace IGetPost {
     export interface IInput extends GetPostQuery.IVariable {}
 }
 export namespace ICreatePost {
-    export interface IInput extends CreatePostQuery.IVariable {}
+    export interface IInput extends CreatePostMutation.IVariable {}
 }
 export namespace IDeletePost {
-    export interface IInput extends DeletePostQuery.IVariable {}
+    export interface IInput extends DeletePostMutation.IVariable {}
 }
 export namespace IUpdatePost {
-    export interface IInput extends UpdatePostQuery.IVariable {}
+    export interface IInput extends UpdatePostMutation.IVariable {}
 }
 
 export interface IPostService {

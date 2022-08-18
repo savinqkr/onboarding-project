@@ -8,9 +8,9 @@ import {
 } from "./post.service.interface";
 import {
     GetPostQuery,
-    CreatePostQuery,
-    DeletePostQuery,
-    UpdatePostQuery,
+    CreatePostMutation,
+    DeletePostMutation,
+    UpdatePostMutation,
 } from "./graphql";
 
 class PostService implements IPostService {
@@ -54,9 +54,9 @@ class PostService implements IPostService {
      */
     public async createPost(objects: ICreatePost.IInput) {
         const { newPost } = await this.client.request<
-            CreatePostQuery.IResponse,
-            CreatePostQuery.IVariable
-        >(CreatePostQuery.Document, objects, {
+            CreatePostMutation.IResponse,
+            CreatePostMutation.IVariable
+        >(CreatePostMutation.Document, objects, {
             Authorization:
                 typeof window !== "undefined"
                     ? `Bearer ${localStorage.getItem("accessToken")}`
@@ -75,9 +75,9 @@ class PostService implements IPostService {
      */
     public async deletePost(id: IDeletePost.IInput) {
         const { deletedPost } = await this.client.request<
-            DeletePostQuery.IResponse,
-            DeletePostQuery.IVariable
-        >(DeletePostQuery.Document, id, {
+            DeletePostMutation.IResponse,
+            DeletePostMutation.IVariable
+        >(DeletePostMutation.Document, id, {
             Authorization:
                 typeof window !== "undefined"
                     ? `Bearer ${localStorage.getItem("accessToken")}`
@@ -100,9 +100,9 @@ class PostService implements IPostService {
      */
     public async updatePost(args: IUpdatePost.IInput) {
         const { updatedPost } = await this.client.request<
-            UpdatePostQuery.IResponse,
-            UpdatePostQuery.IVariable
-        >(UpdatePostQuery.Document, args, {
+            UpdatePostMutation.IResponse,
+            UpdatePostMutation.IVariable
+        >(UpdatePostMutation.Document, args, {
             Authorization:
                 typeof window !== "undefined"
                     ? `Bearer ${localStorage.getItem("accessToken")}`

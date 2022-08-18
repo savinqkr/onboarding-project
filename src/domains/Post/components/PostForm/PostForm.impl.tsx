@@ -11,6 +11,7 @@ const PostDetails: React.FC<IPostForm.IProps> = () => {
 
     // postId
     const postId = (router.query.id as string) ?? "";
+    console.log(router.pathname);
 
     // createPost -- useMutation
     const { mutate: createPostMutate } = useMutation(["createPost"], () =>
@@ -25,44 +26,50 @@ const PostDetails: React.FC<IPostForm.IProps> = () => {
         ["getPost"],
         () => postService.getPost({ id: postId }),
         {
-            enabled: postId !== "",
+            enabled: !router.pathname.includes("new"),
         }
     );
 
     // updatePost -- useMutation
-    const { data: updatePostData, mutate: updatePostMutate } = useMutation(
-        ["updatePost"],
-        () =>
-            postService.updatePost({
-                id: postId,
-                title: getValues("postTitle"),
-                content: getValues("postContent"),
-            })
+    const { mutate: updatePostMutate } = useMutation(["updatePost"], () =>
+        postService.updatePost({
+            id: postId,
+            title: getValues("postTitle"),
+            content: getValues("postContent"),
+        })
     );
 
-    // onClickCreatePost
-    const onClickCreatePost = () => {
+    // onSubmitCreatePost
+    const onSubmitCreatePost = () => {
         createPostMutate();
         router.push("/");
     };
 
-    // onClickUpdatePost
-    const onClickUpdatePost = () => {
+    // onSubmitUpdatePost
+    const onSubmitUpdatePost = () => {
         const answer = confirm("저장하시겠습니까?");
         if (answer) updatePostMutate();
         router.push(`/post/details/${postId}`);
     };
 
-    if (!postData || isLoading) return <p>Loading...</p>;
+    if (postId !== "" && (!postData || isLoading)) return <p>Loading...</p>;
 
     return (
         <VPostForm
             postId={postId}
             register={register}
-            onClickCreatePost={handleSubmit(onClickCreatePost)}
-            onClickUpdatePost={handleSubmit(onClickUpdatePost)}
-            title={postData.title}
-            content={postData.content}
+            onSubmitCreatePost={handleSubmit(onSubmitCreatePost)}
+            onSubmitUpdatePost={handleSubmit(onSubmitUpdatePost)}
+            title={
+                router.pathname.includes("new")
+                    ? ""
+                    : (postData?.title as string)
+            }
+            content={
+                router.pathname.includes("new")
+                    ? ""
+                    : (postData?.content as string)
+            }
         />
     );
 };

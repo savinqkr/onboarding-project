@@ -5,8 +5,8 @@ export namespace IPostForm {
     export interface IVProps extends IProps {
         postId: string;
         register: UseFormRegister<IForm>;
-        onClickCreatePost: () => void;
-        onClickUpdatePost: () => void;
+        onSubmitCreatePost: () => void;
+        onSubmitUpdatePost: () => void;
         title: string;
         content: string;
     }

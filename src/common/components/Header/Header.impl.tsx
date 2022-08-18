@@ -28,7 +28,6 @@ const Header: React.FC<Header.IProps> = () => {
             haveNoToken
         );
         if (userInfo) {
-            // console.log(userInfo);
             window.localStorage.setItem("accountName", userInfo.accountName);
             window.localStorage.setItem("userId", userInfo.sub);
             sessionTime = useCounter(userInfo.exp);
@@ -55,7 +54,7 @@ const Header: React.FC<Header.IProps> = () => {
         const answer = confirm("로그아웃 하시겠습니까?");
         if (answer) {
             window.localStorage.clear();
-            router.reload();
+            router.push("/");
         }
     };
 

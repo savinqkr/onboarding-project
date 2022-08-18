@@ -7,8 +7,8 @@ const VPostDetails: React.FC<IPostForm.IVProps> = props => {
     const {
         postId,
         register,
-        onClickCreatePost,
-        onClickUpdatePost,
+        onSubmitCreatePost,
+        onSubmitUpdatePost,
         title,
         content,
     } = props;
@@ -16,7 +16,7 @@ const VPostDetails: React.FC<IPostForm.IVProps> = props => {
     return (
         <div css={postDetailsStyle}>
             <form
-                onSubmit={!postId ? onClickCreatePost : onClickUpdatePost}
+                onSubmit={!postId ? onSubmitCreatePost : onSubmitUpdatePost}
                 css={formStyle}
             >
                 <h2>{!postId ? "NEW POST" : "EDIT POST"}</h2>

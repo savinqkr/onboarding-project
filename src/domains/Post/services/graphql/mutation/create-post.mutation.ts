@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 
-export namespace CreatePostQuery {
+export namespace CreatePostMutation {
     export interface IVariable {
         title: string;
         content: string;
@@ -13,7 +13,7 @@ export namespace CreatePostQuery {
     }
 
     export const Document = gql`
-        mutation CreatePostQuery($title: String, $content: String) {
+        mutation CreatePostMutation($title: String, $content: String) {
             newPost: insert_board_one(
                 object: { content: $content, title: $title }
             ) {

@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 
-export namespace UpdatePostQuery {
+export namespace UpdatePostMutation {
     export interface IVariable {
         id: string;
         title: string;
@@ -17,7 +17,7 @@ export namespace UpdatePostQuery {
         };
     }
     export const Document = gql`
-        mutation UpdatePostQuery(
+        mutation UpdatePostMutation(
             $id: uuid!
             $title: String!
             $content: String!
