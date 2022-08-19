@@ -4,8 +4,6 @@ import BoardItem from "../BoardItem";
 
 const VBoardBox: React.FC<IBoardBox.IVProps> = props => {
     const { boardDatas, onClickViewMore, showMoreBtn } = props;
-    // const { boardDatas, onClickViewMore } = props;
-    // console.log(showMoreBtn);
 
     return (
         <>
