@@ -7,11 +7,13 @@ const BoardBox: React.FC<IBoardBox.IProps> = () => {
     // getBoard -- useQuery
     const { data: boardDatas, isLoading } = useQuery(
         ["getBoard"],
-        () => boardService.getBoard({ limit: 20 }),
+        () => boardService.getBoard({ limit: 5 }),
         {
             keepPreviousData: true,
         }
     );
+
+    // infinite scroll
 
     if (isLoading) return <p>Loading . . .</p>;
 
