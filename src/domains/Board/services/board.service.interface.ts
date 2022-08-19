@@ -1,10 +1,13 @@
-import { GetBoardQuery } from "./graphql";
+import { GetBoardQuery, GetAllBoardQuery } from "./graphql";
 
 export namespace IGetBoard {
     export interface IInput extends GetBoardQuery.IVariable {}
 }
+export namespace IGetAllBoard {
+    export interface IInput extends GetAllBoardQuery.IVariable {}
+}
 export interface IBoardService {
-    getBoard(limit: IGetBoard.IInput): Promise<
+    getBoard(args: IGetBoard.IInput): Promise<
         {
             id: string;
             title: string;
@@ -14,6 +17,11 @@ export interface IBoardService {
             };
             createdAt: string;
             updatedAt: string;
+        }[]
+    >;
+    getAllBoard(): Promise<
+        {
+            id: string;
         }[]
     >;
 }

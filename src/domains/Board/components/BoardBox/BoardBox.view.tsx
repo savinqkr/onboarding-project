@@ -3,7 +3,9 @@ import { IBoardBox } from "./BoardBox.interface";
 import BoardItem from "../BoardItem";
 
 const VBoardBox: React.FC<IBoardBox.IVProps> = props => {
-    const { boardDatas } = props;
+    const { boardDatas, onClickViewMore, showMoreBtn } = props;
+    // const { boardDatas, onClickViewMore } = props;
+    // console.log(showMoreBtn);
 
     return (
         <>
@@ -32,16 +34,13 @@ const VBoardBox: React.FC<IBoardBox.IVProps> = props => {
                         ))}
                 </tbody>
             </table>
-            <div css={buttonContainer}>
-                <button
-                    css={largeButtonStyle}
-                    onClick={() => {
-                        console.log("SHOW MORE POSTS!!!");
-                    }}
-                >
-                    더보기
-                </button>
-            </div>
+            {showMoreBtn && (
+                <div css={buttonContainer}>
+                    <button css={largeButtonStyle} onClick={onClickViewMore}>
+                        더보기
+                    </button>
+                </div>
+            )}
         </>
     );
 };
