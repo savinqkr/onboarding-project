@@ -1,6 +1,10 @@
 import { GraphQLClient } from "graphql-request";
-import { IGetBoard, IBoardService } from "./board.service.interface";
-import { GetBoardQuery } from "./graphql";
+import {
+    IGetBoard,
+    IGetAllBoard,
+    IBoardService,
+} from "./board.service.interface";
+import { GetBoardQuery, GetAllBoardQuery } from "./graphql";
 
 class BoardService implements IBoardService {
     private static instance: BoardService;
@@ -25,11 +29,26 @@ class BoardService implements IBoardService {
         updatedAt: string;
     }>
      */
-    public async getBoard(limit: IGetBoard.IInput) {
+    public async getBoard(args: IGetBoard.IInput) {
         const { board } = await this.client.request<
             GetBoardQuery.IResponse,
             GetBoardQuery.IVariable
-        >(GetBoardQuery.Document, limit);
+        >(GetBoardQuery.Document, args);
+
+        return board;
+    }
+    /**
+     * getAllBoard
+     * @param  
+     * @returns -- board : Array<{
+        id: string;
+    }>
+     */
+    public async getAllBoard() {
+        const { board } = await this.client.request<
+            GetAllBoardQuery.IResponse,
+            GetAllBoardQuery.IVariable
+        >(GetAllBoardQuery.Document);
 
         return board;
     }

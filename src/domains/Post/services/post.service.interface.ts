@@ -35,10 +35,7 @@ export interface IPostService {
     // deletePost
     deletePost(id: IDeletePost.IInput): Promise<{ id: string } | undefined>;
     // updatePost
-    updatePost(
-        pk_colums: IUpdatePost.IInput,
-        _set: IUpdatePost.IInput
-    ): Promise<{
+    updatePost(args: IUpdatePost.IInput): Promise<{
         id: string;
         title: string;
         content: string;

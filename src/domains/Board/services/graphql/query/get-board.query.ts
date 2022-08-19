@@ -1,7 +1,10 @@
 import { gql } from "graphql-request";
 
 export namespace GetBoardQuery {
-    export interface IVariable {}
+    export interface IVariable {
+        limit: number;
+        offset: number;
+    }
     export interface IResponse {
         board: Array<{
             id: string;
@@ -15,8 +18,12 @@ export namespace GetBoardQuery {
         }>;
     }
     export const Document = gql`
-        query GetBoardQuery($limit: Int!) {
-            board(limit: $limit, order_by: { updatedAt: desc }) {
+        query GetBoardQuery($limit: Int!, $offset: Int!) {
+            board(
+                limit: $limit
+                order_by: { updatedAt: desc }
+                offset: $offset
+            ) {
                 id
                 title
                 content

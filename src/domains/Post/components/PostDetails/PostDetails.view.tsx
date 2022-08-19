@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { IPostDetails } from "./PostDetails.interface";
-import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
+import { MdHome, MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -13,6 +13,14 @@ const VPostDetails: React.FC<IPostDetails.IVProps> = props => {
 
     return (
         <>
+            <button
+                css={homeBtnStyle}
+                type="button"
+                onClick={() => router.push("/")}
+            >
+                <MdHome size={24} />
+                Home
+            </button>
             <div css={postInfoStyle}>
                 <h1>{postData?.title}</h1>
                 <p>{`by ${postData?.author.nickname}`}</p>
@@ -71,6 +79,22 @@ const VPostDetails: React.FC<IPostDetails.IVProps> = props => {
     );
 };
 
+const homeBtnStyle = css`
+    width: 150px;
+    height: 50px;
+    margin-top: 20px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 24px;
+    color: #808080;
+    background-color: #fff;
+    border: 1px solid #808080;
+    position: absolute;
+    left: 20px;
+    cursor: pointer;
+`;
 const postInfoStyle = css`
     width: 863px;
     font-size: 20px;

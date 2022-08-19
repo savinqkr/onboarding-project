@@ -1,6 +1,8 @@
 export namespace IBoardBox {
     export interface IProps {}
     export interface IVProps {
+        onClickViewMore: () => void;
+        showMoreBtn?: boolean | undefined;
         boardDatas:
             | {
                   id: string;

@@ -9,6 +9,11 @@ const PostDetails: React.FC<IPostForm.IProps> = () => {
     const { register, handleSubmit, getValues } = useForm<IPostForm.IForm>();
     const router = useRouter();
 
+    const haveNoToken: boolean =
+        typeof window !== "undefined" && !localStorage.getItem("accessToken");
+
+    if (haveNoToken) router.push("/");
+
     // postId
     const postId = (router.query.id as string) ?? "";
     console.log(router.pathname);

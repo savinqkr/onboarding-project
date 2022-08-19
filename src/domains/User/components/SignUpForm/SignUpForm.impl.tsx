@@ -58,6 +58,7 @@ const SignUpForm: React.FC<ISignUpForm.IProps> = () => {
     }, [registerSignatureData]);
 
     useEffect(() => {
+        console.log(registerUserData);
         if (!registerUserData) return;
         const answer = window.confirm(
             "회원가입이 완료되었습니다. 로그인 하시겠습니까?"
